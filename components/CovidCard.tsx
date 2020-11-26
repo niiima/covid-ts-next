@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+//import styled from 'styled-components'
 import millify from 'millify';
 import { ICountryType } from "../interfaces/country.interface";
 import { ICovidType } from "../interfaces/covid.interface";
