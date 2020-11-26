@@ -40,12 +40,12 @@ class Index extends React.Component<IAppProps, IAppState> {
     };
   }
 
-  updateSelectedCountry(countryObject) {
+  updateSelectedCountry(countryObject:ICountryType) {
     this.setState({ selected: countryObject });
   }
 
   componentDidMount() {
-    console.log("componentDidMount")
+    console.log("componentDidMount");
     this.setState({
       initiated: true
     });
@@ -58,7 +58,7 @@ class Index extends React.Component<IAppProps, IAppState> {
         <p>Check random info about countries</p>
         <InfoPanel
           selected={this.state.selected}
-          updateSelectedCountry={(co) => this.updateSelectedCountry(co)}
+          updateSelectedCountry={(country:ICountryType) => this.updateSelectedCountry(country)}
           countries={this.props.countries}
           covid={this.props.covid}
         />

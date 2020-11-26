@@ -8,7 +8,7 @@ interface IInfoPanelProps {
   selected: ICountryType
   covid: ICovidType[]
   countries: ICountryType[],//CountriesType[],
-  updateSelectedCountry: (countryObject: ICountryType | undefined) => void
+  updateSelectedCountry: (countryObject: ICountryType) => void
 }
 
 const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
@@ -16,7 +16,8 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
   const handleCountryChange = (e) => {
     const selected = e.target.children[e.target.selectedIndex];
     const selectedObj = [...props.countries].find(({ iso2 }) => iso2 === selected.value);
-    props.updateSelectedCountry(selectedObj);
+    if (selectedObj)
+      props.updateSelectedCountry(selectedObj);
   }
 
   const getCovidList: () => ICovidType[] = () => {
