@@ -7,7 +7,7 @@ import getCountries from '../utils/fetchInitialData';
 import { ICountryType } from '../interfaces/country.interface'
 import { ObjectType } from '../interfaces/common.interface';
 import { ICovidType } from '../interfaces/covid.interface';
-
+import App from 'next/app'
 interface IAppProps {
   covid: ICovidType[];
   countries: ICountryType[],
