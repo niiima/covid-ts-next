@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
 import getCountries from '../utils/fetchInitialData';
 import { ICountryType } from '../interfaces/country.interface'
-import { ObjectType } from '../interfaces/common.interface';
+//import { ObjectType } from '../interfaces/common.interface';
 import { ICovidType } from '../interfaces/covid.interface';
 
 interface IAppProps {
@@ -14,7 +14,7 @@ interface IAppProps {
 }
 
 interface IAppState {
-  countries: ObjectType[];
+  countries: ICountryType[];
   covid: ICovidType[];
   initiated: boolean;
   selected: ICountryType;
@@ -30,6 +30,8 @@ class Index extends React.Component<IAppProps, IAppState> {
     }
   }
 
+  //static contextType = MyContext; 
+
   static async getInitialProps({ req }: NextPageContext) {
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
     console.log(userAgent)
@@ -43,6 +45,7 @@ class Index extends React.Component<IAppProps, IAppState> {
   updateSelectedCountry(countryObject:ICountryType) {
     this.setState({ selected: countryObject });
   }
+  
 
   componentDidMount() {
     console.log("componentDidMount");

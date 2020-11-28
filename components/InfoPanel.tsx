@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Flag from './Flag';
 import { ICountryType } from '../interfaces/country.interface';
 import { ICovidType } from '../interfaces/covid.interface';
@@ -13,6 +13,10 @@ interface IInfoPanelProps {
 
 const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
 
+  const [rgb, setRGB] = useState("green");
+  console.log(rgb);
+
+ 
   const handleCountryChange = (e) => {
     const selected = e.target.children[e.target.selectedIndex];
     const selectedObj = [...props.countries].find(({ iso2 }) => iso2 === selected.value);
@@ -33,7 +37,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     <div>
       <ul className="list-group">
         <li className="list-group-item">
-          <Flag country_code={props.selected.iso2} />
+          <Flag country_code={props.selected.iso2} setrgb={setRGB} />
         </li>
       </ul>
       <br />
