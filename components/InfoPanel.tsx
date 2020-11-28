@@ -5,8 +5,8 @@ import { ICovidType } from '../interfaces/covid.interface';
 import Pollution from './Pollution';
 import CovidCard from './CovidCard';
 interface IInfoPanelProps {
-  selected: ICountryType
-  covid: ICovidType[]
+  selected: ICountryType,
+  covid: ICovidType[],
   countries: ICountryType[],//CountriesType[],
   updateSelectedCountry: (countryObject: ICountryType) => void
 }
@@ -16,7 +16,6 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
   const [rgb, setRGB] = useState("green");
   console.log(rgb);
 
- 
   const handleCountryChange = (e) => {
     const selected = e.target.children[e.target.selectedIndex];
     const selectedObj = [...props.countries].find(({ iso2 }) => iso2 === selected.value);
