@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
 import getCountries from '../utils/fetchInitialData';
 import { ICountryType } from '../interfaces/country.interface'
-import { ObjectType } from '../interfaces/common.interface';
+//import { ObjectType } from '../interfaces/common.interface';
 import { ICovidType } from '../interfaces/covid.interface';
 import App from 'next/app'
 interface IAppProps {
@@ -14,7 +14,7 @@ interface IAppProps {
 }
 
 interface IAppState {
-  countries: ObjectType[];
+  countries: ICountryType[];
   covid: ICovidType[];
   initiated: boolean;
   selected: ICountryType;
@@ -30,6 +30,8 @@ class Index extends React.Component<IAppProps, IAppState> {
     }
   }
 
+  //static contextType = MyContext; 
+
   static async getInitialProps({ req }: NextPageContext) {
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
     console.log(userAgent)
@@ -40,12 +42,13 @@ class Index extends React.Component<IAppProps, IAppState> {
     };
   }
 
-  updateSelectedCountry(countryObject) {
+  updateSelectedCountry(countryObject:ICountryType) {
     this.setState({ selected: countryObject });
   }
+  
 
   componentDidMount() {
-    console.log("componentDidMount")
+    console.log("componentDidMount");
     this.setState({
       initiated: true
     });
@@ -58,7 +61,7 @@ class Index extends React.Component<IAppProps, IAppState> {
         <p>Check random info about countries</p>
         <InfoPanel
           selected={this.state.selected}
-          updateSelectedCountry={(co) => this.updateSelectedCountry(co)}
+          updateSelectedCountry={(country:ICountryType) => this.updateSelectedCountry(country)}
           countries={this.props.countries}
           covid={this.props.covid}
         />

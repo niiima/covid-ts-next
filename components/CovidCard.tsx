@@ -1,7 +1,10 @@
 import { Fragment } from 'react';
+import styled from 'styled-components';
+import { BiWorld } from 'react-icons/bi'
 import millify from 'millify';
 import { ICountryType } from "../interfaces/country.interface";
 import { ICovidType } from "../interfaces/covid.interface";
+import  getFlagColors  from '../utils/getFlagColors';
 export interface ICovidCardProps {
     covidInfoList: ICovidType[];
     selected: ICountryType
@@ -9,6 +12,7 @@ export interface ICovidCardProps {
 
 const CovidCard = (props: ICovidCardProps) => {
 
+    const colors = getFlagColors(props.selected.colors)
     return (<Fragment>
         {
             props.covidInfoList.length ?
@@ -23,22 +27,30 @@ const CovidCard = (props: ICovidCardProps) => {
                         todayRecovered,
 
                     } = cardInfo;
+                    //console.log(props.selected.colors[0])
                     return (
 
-                        <div key={countryInfo._id} className="covid-card-conteiner">
-                            <p className="scnd-font-color">In {continent}</p>
-                            <p className="scnd-font-color">Deaths per million {deathsPerOneMillion}</p>
-                            <p className="scnd-font-color">Total population {millify(population)}</p>
+                        <CovidInfo key={countryInfo._id}>
+                            <Region style={{ color: colors[0] }}> <BiWorld size="30px" style={{ color: colors[1] ? colors[1] : colors[0], width: 35 }}></BiWorld>
+                                {props.selected.name} is a country inside of <span style={{ color: colors[1]}}>{continent}</span></Region>
+                            <p className="scnd-font-color" style={{ color: colors[2] ? colors[2] : colors[1] ? colors[1] : colors[0] }}>Deaths per each million: {deathsPerOneMillion}</p>
+                            <p className="scnd-font-color" >Total population {millify(population)}</p>
                             <p className="scnd-font-color">cases {millify(todayCases)} | Recovered: {millify(todayRecovered)} | Deaths:{millify(todayDeaths)}</p>
-                        </div>
+                        </CovidInfo>
 
                     );
                 })
                 : (<div className="covid-card-conteiner">
-                    <p className="scnd-font-color">No data about {props.selected.name}</p>
+                    <p  style={{ color: colors[0] }}>No data about {props.selected.name}</p>
                 </div>)
         }
     </Fragment>)
 }
 
+const Region = styled.p`
+color:green;
+`
+
+const CovidInfo = styled.div`
+font-size:2.2em;`
 export default CovidCard;
