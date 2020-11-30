@@ -7,7 +7,9 @@ import getCountries from '../utils/fetchInitialData';
 import { ICountryType } from '../interfaces/country.interface'
 //import { ObjectType } from '../interfaces/common.interface';
 import { ICovidType } from '../interfaces/covid.interface';
-import App from 'next/app'
+import CovidDragableTable from '../components/CovidLDragableTable'
+
+//import App from 'next/app'
 interface IAppProps {
   covid: ICovidType[];
   countries: ICountryType[],
@@ -35,6 +37,10 @@ class Index extends React.Component<IAppProps, IAppState> {
   static async getInitialProps({ req }: NextPageContext) {
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
     console.log(userAgent)
+    //     return req
+    //     ? { userAgent: req.headers['user-agent'] }
+    //     : { userAgent: navigator.userAgent }
+    // }
     const countries = await getCountries();
     return {
       covid: countries.data,
@@ -42,12 +48,17 @@ class Index extends React.Component<IAppProps, IAppState> {
     };
   }
 
-  updateSelectedCountry(countryObject:ICountryType) {
+  updateSelectedCountry(countryObject: ICountryType) {
     this.setState({ selected: countryObject });
   }
-  
+
+  getSnapshotBeforeUpdate(prevProps, prevState){
+    console.log(prevProps)
+    console.log(prevState)
+  }
 
   componentDidMount() {
+    //render() will not be invoked if shouldComponentUpdate() returns false.
     console.log("componentDidMount");
     this.setState({
       initiated: true
@@ -61,10 +72,11 @@ class Index extends React.Component<IAppProps, IAppState> {
         <p>Check random info about countries</p>
         <InfoPanel
           selected={this.state.selected}
-          updateSelectedCountry={(country:ICountryType) => this.updateSelectedCountry(country)}
+          updateSelectedCountry={(country: ICountryType) => this.updateSelectedCountry(country)}
           countries={this.props.countries}
           covid={this.props.covid}
         />
+        <CovidDragableTable countries={this.props.covid}></CovidDragableTable>
       </div>
       : <div> Loading... </div>} </Layout>
     )
