@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Navbar from './Navbar';
 import { createContext } from 'react'
 interface LayoutProps {
-  title?: string
+  title?: string;
 }
 
 const themes = {

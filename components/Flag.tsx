@@ -1,20 +1,23 @@
-import {  useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 //import  getRGB  from '../utils/getRGB';
 
+interface SetRgbCallBackType {
+    (rgb): void;
+}
 interface Props {
-    country_code: string,
-    setrgb:(rgb)=>void
+    country_code: string;
+    setrgb:SetRgbCallBackType
 }
 
 const Flag = (props: Props) => {
     const [hover, setHover] = useState(cs => ({ ...cs, isHover: false }));
-    
+
     // const imgFlag = useCallback(()=>{
     //     getRGB(ref.current)
     //     props.setrgb()
     // },[]);
-    useEffect(()=>console.log("Effect Used"))
-    const imgFlag = useRef<HTMLImageElement> (null);
+    useEffect(() => console.log("Effect Used"))
+    const imgFlag = useRef<HTMLImageElement>(null);
 
     //useEffect()
     // (()=>{

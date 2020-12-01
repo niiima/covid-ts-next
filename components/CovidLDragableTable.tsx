@@ -5,7 +5,7 @@ import ReactDragListView from 'react-drag-listview/lib/index.js';
 const CovidDragableTable = (props) => {
     const [data, setData] = useState({data:props.countries});
     // setData(props.countries);
-    console.log(data)
+    console.log(data);
     const columns = [
         {
             title: "Index",

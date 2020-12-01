@@ -16,7 +16,7 @@ export type CountryType = {
 
 export type CountryFlagColors = {
     color: string;
-    percentage: number
+    percentage: number;
 }
    // [key: string]: string | null
 

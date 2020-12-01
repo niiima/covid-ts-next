@@ -5,10 +5,10 @@ import { ICovidType } from '../interfaces/covid.interface';
 import Pollution from './Pollution';
 import CovidCard from './CovidCard';
 interface IInfoPanelProps {
-  selected: ICountryType,
-  covid: ICovidType[],
-  countries: ICountryType[],//CountriesType[],
-  updateSelectedCountry: (countryObject: ICountryType) => void
+  selected: ICountryType;
+  covid: ICovidType[];
+  countries: ICountryType[];//CountriesType[],
+  updateSelectedCountry: (countryObject: ICountryType) => void;
 }
 
 const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {

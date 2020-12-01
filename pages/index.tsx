@@ -12,7 +12,7 @@ import CovidDragableTable from '../components/CovidLDragableTable'
 //import App from 'next/app'
 interface IAppProps {
   covid: ICovidType[];
-  countries: ICountryType[],
+  countries: ICountryType[];
 }
 
 interface IAppState {

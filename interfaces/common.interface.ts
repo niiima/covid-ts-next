@@ -1,6 +1,6 @@
 // Some type helpers
 export interface ObjectType {
-    [key: string]: string | null
+    [key: string]: string | null;
 }
 
 export type OrNull<T> = T | null;

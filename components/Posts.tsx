@@ -1,11 +1,11 @@
 import React from 'react'
 import fetch from 'isomorphic-unfetch'
 interface RedditPost{
-    data:{[key:string  ]: string}
+    data:{[key:string  ]: string};
 }
 type Props = {
-    posts: readonly RedditPost[]
-    subreddit: string
+    posts: readonly RedditPost[];
+    subreddit: string;
 }
 
 const Posts = (props: Props) => {
