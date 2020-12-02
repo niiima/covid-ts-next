@@ -1,18 +1,10 @@
 import fetch from 'isomorphic-unfetch';
 import { v4 as uuidv4 } from 'uuid';
 //import Posts from '../components/Posts';
+import { ICountryType, CountryFlagColors } from '../interfaces/country.interface';
+
 const countryList = require('../public/country-list.json');
 const flagData = require('../public/flag_data.json');
-import { ICountryType, CountryFlagColors } from '../interfaces/country.interface';
-//import { ObjectType } from '../interfaces/common.interface'
-//import { sample } from 'lodash'
-// interface CountryBasicType {
-//     iso2: string,
-//     name: string,
-//     id: string,
-//     index: number,
-//     colors: CountryFlagColors[]
-// }
 
 const getCountries = async () => {
 
