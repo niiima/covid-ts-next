@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 //import ReactDOM from 'react-dom'
 import { Table } from 'antd';
 import ReactDragListView from 'react-drag-listview/lib/index.js';
-const CovidDragableTable = (props) => {
+const CovidDraggableTable = (props) => {
     const [data, setData] = useState({data:props.countries});
     // setData(props.countries);
     console.log(data);
@@ -72,4 +72,4 @@ console.log(data)
 }
 
 //<ReactDragListView {...this.dragProps}></ReactDragListView>
-export default CovidDragableTable; 
+export default CovidDraggableTable; 

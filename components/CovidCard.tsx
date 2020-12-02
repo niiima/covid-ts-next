@@ -49,12 +49,12 @@ const CovidCard = (props: ICovidCardProps) => {
 
 const Conteiner = styled.div`
 display: flex;
-  width: 100px;
-  height: 150px;
+  width: 200px;
+  height: 350px;
   border: 3px solid ${props => props.color};
   border-radius: 15px;
   justify-content: space-around;
-  font-size: 2em;
+  font-size: 1em;
   color: ${props => props.color};
   `
 
@@ -63,5 +63,6 @@ color:green;
 `
 
 const CovidInfo = styled.div`
-font-size:2.2em;`
+`
+
 export default CovidCard;

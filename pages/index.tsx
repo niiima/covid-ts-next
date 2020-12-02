@@ -7,7 +7,7 @@ import getCountries from '../utils/fetchInitialData';
 import { ICountryType } from '../interfaces/country.interface'
 //import { ObjectType } from '../interfaces/common.interface';
 import { ICovidType } from '../interfaces/covid.interface';
-import CovidDragableTable from '../components/CovidLDragableTable'
+import CovidDraggableTable from '../components/CovidDraggableTable'
 
 //import App from 'next/app'
 interface IAppProps {
@@ -75,7 +75,7 @@ class Index extends React.Component<IAppProps, IAppState> {
           countries={this.props.countries}
           covid={this.props.covid}
         />
-        <CovidDragableTable countries={this.props.covid}></CovidDragableTable>
+        <CovidDraggableTable countries={this.props.covid}></CovidDraggableTable>
       </div>
       : <div> Loading... </div>} </Layout>
     )

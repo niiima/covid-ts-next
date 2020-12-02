@@ -3,7 +3,7 @@ const getFlagColors = (colors: CountryFlagColors[]) => {
     let arr;
     if (colors)
         arr = colors.map(c => c.color);
-    else arr = ["#ffffff"]
+    else arr = ["#ccc"]
     return arr
 }
 
