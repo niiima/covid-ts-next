@@ -32,8 +32,7 @@ class Index extends React.Component<IAppProps, IAppState> {
     }
   }
 
-  //static contextType = MyContext; 
-
+  // static contextType = MyContext; 
   static async getInitialProps({ req }: NextPageContext) {
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
     console.log(userAgent)
@@ -52,7 +51,7 @@ class Index extends React.Component<IAppProps, IAppState> {
     this.setState({ selected: countryObject });
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState){
+  getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log(prevProps)
     console.log(prevState)
   }
