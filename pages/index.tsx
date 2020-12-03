@@ -5,9 +5,8 @@ import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
 import getCountries from '../utils/fetchInitialData';
 import { ICountryType } from '../interfaces/country.interface'
-//import { ObjectType } from '../interfaces/common.interface';
-import { ICovidType } from '../interfaces/covid.interface';
-import CovidDraggableTable from '../components/CovidDraggableTable'
+import { ICovidType,ICovidTypeWithColors } from '../interfaces/covid.interface';
+//import CovidDraggableTable from '../components/CovidDraggableTable'
 
 //import App from 'next/app'
 interface IAppProps {
@@ -20,7 +19,7 @@ interface IAppState {
   covid: ICovidType[];
   initiated: boolean;
   selected: ICountryType;
-  countryList: ICovidType[];
+  countryList: ICovidTypeWithColors[];
 }
 
 class Index extends React.Component<IAppProps, IAppState> {
@@ -50,11 +49,14 @@ class Index extends React.Component<IAppProps, IAppState> {
   }
 
   updateSelectedCountry(countryObject: ICountryType) {
-    const selectedCovidInfo = this.state.covid.find(c => c.countryInfo.iso2 === countryObject.iso2)
+    let selectedCovidInfo = this.state.covid.find(c => c.countryInfo.iso2 === countryObject.iso2);
     if (selectedCovidInfo) {
-      this.setState((cs => {
+    let selectedCovidInfoFull:ICovidTypeWithColors = { ...selectedCovidInfo, colors: countryObject.colors }
+
+      let listArray = [...this.state.countryList.slice()];
+      this.setState((() => {
         return {
-          countryList: [...cs.countryList.slice(), selectedCovidInfo],
+          countryList: [selectedCovidInfoFull, ...listArray],
           selected: countryObject
         };
       }
@@ -67,44 +69,45 @@ class Index extends React.Component<IAppProps, IAppState> {
     }
   }
 
-// updateSelectedCountryList(countryObject: ICountryType) {
-//   this.setState((cs => { return { countryList: [...cs.countryList, countryObject] } }));
-// }
+  // updateSelectedCountryList(countryObject: ICountryType) {
+  //   this.setState((cs => { return { countryList: [...cs.countryList, countryObject] } }));
+  // }
 
-// getSnapshotBeforeUpdate(prevProps, prevState) {
-//   console.log(prevProps)
-//   console.log(prevState)
-// }
+  // getSnapshotBeforeUpdate(prevProps, prevState) {
+  //   console.log(prevProps)
+  //   console.log(prevState)
+  // }
 
-componentDidMount() {
-  //render() will not be invoked if shouldComponentUpdate() returns false.
-  console.log("componentDidMount");
-  this.setState({
-    initiated: true
-  });
-}
+  componentDidMount() {
+    //render() will not be invoked if shouldComponentUpdate() returns false.
+    console.log("componentDidMount");
+    this.setState({
+      initiated: true
+    });
+  }
 
-render() {
-  return (<Layout>{this.state.initiated ?
-    <div>
-      <h1>Welcome to Regions</h1>
-      <p>Check random info about countries</p>
-      <InfoPanel
-        selected={this.state.selected}
-        updateSelectedCountry={(country: ICountryType) => {
-          this.updateSelectedCountry(country);
-          //this.state.countryList.push(country)
-        }
-        }
-        countries={this.props.countries}
-        covid={this.props.covid}
-        countryList={this.state.countryList}
-      />
-      <CovidDraggableTable countries={this.props.covid}></CovidDraggableTable>
-    </div>
-    : <div> Loading... </div>} </Layout>
-  )
-}
+  render() {
+    return (<Layout>
+      {this.state.initiated ?
+        <div>
+          <h1>Welcome to Regions</h1>
+          <p>Check random info about countries</p>
+          <InfoPanel
+            selected={this.state.selected}
+            updateSelectedCountry={(country: ICountryType) => {
+              this.updateSelectedCountry(country);
+              //this.state.countryList.push(country)
+            }
+            }
+            countries={this.props.countries}
+            covid={this.props.covid}
+            countryList={this.state.countryList}
+          />
+          {/* <CovidDraggableTable countries={this.props.covid}></CovidDraggableTable> */}
+        </div>
+        : <div> Loading... </div>} </Layout>
+    )
+  }
 }
 
 export default Index;

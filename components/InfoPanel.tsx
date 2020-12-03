@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Flag from './Flag';
 import { ICountryType } from '../interfaces/country.interface';
-import { ICovidType } from '../interfaces/covid.interface';
+import { ICovidType,ICovidTypeWithColors } from '../interfaces/covid.interface';
 import Pollution from './Pollution';
 import CovidCards from './CovidCard';
 interface IInfoPanelProps {
@@ -9,7 +9,7 @@ interface IInfoPanelProps {
   covid: ICovidType[];
   countries: ICountryType[];//CountriesType[],
   updateSelectedCountry: (countryObject: ICountryType) => void;
-  countryList:ICovidType[];
+  countryList:ICovidTypeWithColors[];
 }
 
 const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {

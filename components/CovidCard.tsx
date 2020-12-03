@@ -2,16 +2,16 @@ import styled from 'styled-components';
 import { BiWorld } from 'react-icons/bi'
 import millify from 'millify';
 import { ICountryType } from "../interfaces/country.interface";
-import { ICovidType } from "../interfaces/covid.interface";
+import { ICovidTypeWithColors } from "../interfaces/covid.interface";
 import getFlagColors from '../utils/getFlagColors';
 export interface ICovidCardProps {
-    covidInfoList: ICovidType[];
+    covidInfoList: ICovidTypeWithColors[];
     selected: ICountryType;
 }
 
-const Card = (cardInfo, selectedCountry) => {
+const Card = (cardInfo) => {
     //console.log(cardInfo);
-    const colors = getFlagColors(selectedCountry.colors);
+    
     const {
         countryInfo,
         continent,
@@ -20,20 +20,20 @@ const Card = (cardInfo, selectedCountry) => {
         todayCases,
         todayDeaths,
         todayRecovered,
-        country
+        country,
+        colors,
     } = cardInfo;
-    //console.log(props.selected.colors[0])
+    const cardColors = getFlagColors(colors);
     return (
         <CovidInfo key={countryInfo._id}>
             <CovidInfoContent>
-                <Region style={{ color: colors[0] }}> <BiWorld size="30px" style={{ color: colors[1] ? colors[1] : colors[0], width: 35 }}></BiWorld>
-                    {country} is a country inside of <span style={{ color: colors[1] }}>{continent}</span></Region>
-                <p className="scnd-font-color" style={{ color: colors[2] ? colors[2] : colors[1] ? colors[1] : colors[0] }}>Deaths per each million: {deathsPerOneMillion}</p>
+                <Region style={{ color: cardColors[0] }}> <BiWorld size="30px" style={{ color: cardColors[1] ? cardColors[1] : cardColors[0], width: 35 }}></BiWorld>
+                    {country} is a country inside of <span style={{ color: cardColors[1] }}>{continent}</span></Region>
+                <p className="scnd-font-color" style={{ color: cardColors[2] ? cardColors[2] : cardColors[1] ? cardColors[1] : cardColors[0] }}>Deaths per each million: {deathsPerOneMillion}</p>
                 <p className="scnd-font-color" >Total population {millify(population)}</p>
                 <p className="scnd-font-color">cases {millify(todayCases)} | Recovered: {millify(todayRecovered)} | Deaths:{millify(todayDeaths)}</p>
             </CovidInfoContent>
         </CovidInfo>
-
     );
 }
 
@@ -43,16 +43,13 @@ const CovidCards = (props: ICovidCardProps) => {
     if (props.covidInfoList.length) {
         props.covidInfoList.forEach(cardInfo => {
             if (cardInfo)
-                Panels.push(Card(cardInfo, props.selected))
+                Panels.push(Card(cardInfo))
         });
     }
-    return (Panels.length ? (<Container color={{ color: "#ccc" }}>
-        {Panels}
-    </Container>) :
-        (<div className="covid-card-container">
-            <p style={{ color: "#fff" }}>No data about {props.selected.name}</p>
-        </div>)
-    )
+    return (
+        <Container color={{ color: "#ccc" }}>
+            {Panels.length ?  Panels  : (<p style={{ color: "#fff" }}>No data about {props.selected.name}</p>)}
+        </Container>)
 }
 
 
@@ -82,7 +79,6 @@ const CovidInfoContent = styled.div`
 	margin-bottom: 20px; 
 	padding-bottom: 30px; 
     text-decoration: none;
-    
 `
 
 const CovidInfo = styled.li`

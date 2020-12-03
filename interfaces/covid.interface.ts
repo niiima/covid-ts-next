@@ -1,3 +1,5 @@
+import {CountryFlagColors} from './country.interface';
+
 type ICountryInfo = {
     flag: string;
     iso2: string;
@@ -29,4 +31,8 @@ export interface ICovidType {
     todayDeaths: number;
     todayRecovered: number;
     updated: string;
+}
+
+export interface ICovidTypeWithColors extends ICovidType{
+    colors:CountryFlagColors[]
 }
