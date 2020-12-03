@@ -3,12 +3,13 @@ import Flag from './Flag';
 import { ICountryType } from '../interfaces/country.interface';
 import { ICovidType } from '../interfaces/covid.interface';
 import Pollution from './Pollution';
-import CovidCard from './CovidCard';
+import CovidCards from './CovidCard';
 interface IInfoPanelProps {
   selected: ICountryType;
   covid: ICovidType[];
   countries: ICountryType[];//CountriesType[],
   updateSelectedCountry: (countryObject: ICountryType) => void;
+  countryList:ICovidType[];
 }
 
 const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
@@ -23,14 +24,14 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
       props.updateSelectedCountry(selectedObj);
   }
 
-  const getCovidList: () => ICovidType[] = () => {
-    let list: ICovidType[] = [];
-    props.covid.forEach(countryInfo => {
-      if (props.selected.iso2 === countryInfo.countryInfo.iso2)
-        list.push(countryInfo);
-    });
-    return list;
-  }
+  // const getCovidList: () => ICovidType[] = () => {
+  //   let list: ICovidType[] = [];
+  //   props.covid.forEach(countryInfo => {
+  //     if (props.selected.iso2 === countryInfo.countryInfo.iso2)
+  //       list.push(countryInfo);
+  //   });
+  //   return list;
+  // }
 
   return (
     <div>
@@ -54,9 +55,10 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
       </select>
 
       <br />
-      <CovidCard selected={props.selected} covidInfoList={getCovidList()}></CovidCard>
+      <CovidCards selected={props.selected} covidInfoList={props.countryList}></CovidCards>
       <Pollution selected={props.selected.name} ></Pollution>
     </div>
   );
 }
+
 export default InfoPanel;

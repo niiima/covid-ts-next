@@ -20,6 +20,7 @@ interface IAppState {
   covid: ICovidType[];
   initiated: boolean;
   selected: ICountryType;
+  countryList: ICovidType[];
 }
 
 class Index extends React.Component<IAppProps, IAppState> {
@@ -28,7 +29,8 @@ class Index extends React.Component<IAppProps, IAppState> {
     this.state = {
       ...props,
       initiated: false,
-      selected: props.countries.find(c => c.iso2 === "IR")
+      selected: props.countries.find(c => c.iso2 === "IR"),
+      countryList: []
     }
   }
 
@@ -48,38 +50,61 @@ class Index extends React.Component<IAppProps, IAppState> {
   }
 
   updateSelectedCountry(countryObject: ICountryType) {
-    this.setState({ selected: countryObject });
+    const selectedCovidInfo = this.state.covid.find(c => c.countryInfo.iso2 === countryObject.iso2)
+    if (selectedCovidInfo) {
+      this.setState((cs => {
+        return {
+          countryList: [...cs.countryList.slice(), selectedCovidInfo],
+          selected: countryObject
+        };
+      }
+      ));
+    }
+    else {
+      this.setState({
+        selected: countryObject
+      });
+    }
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    console.log(prevProps)
-    console.log(prevState)
-  }
+// updateSelectedCountryList(countryObject: ICountryType) {
+//   this.setState((cs => { return { countryList: [...cs.countryList, countryObject] } }));
+// }
 
-  componentDidMount() {
-    //render() will not be invoked if shouldComponentUpdate() returns false.
-    console.log("componentDidMount");
-    this.setState({
-      initiated: true
-    });
-  }
+// getSnapshotBeforeUpdate(prevProps, prevState) {
+//   console.log(prevProps)
+//   console.log(prevState)
+// }
 
-  render() {
-    return (<Layout>{this.state.initiated ?
-      <div>
-        <h1>Welcome to Regions</h1>
-        <p>Check random info about countries</p>
-        <InfoPanel
-          selected={this.state.selected}
-          updateSelectedCountry={(country: ICountryType) => this.updateSelectedCountry(country)}
-          countries={this.props.countries}
-          covid={this.props.covid}
-        />
-        <CovidDraggableTable countries={this.props.covid}></CovidDraggableTable>
-      </div>
-      : <div> Loading... </div>} </Layout>
-    )
-  }
+componentDidMount() {
+  //render() will not be invoked if shouldComponentUpdate() returns false.
+  console.log("componentDidMount");
+  this.setState({
+    initiated: true
+  });
+}
+
+render() {
+  return (<Layout>{this.state.initiated ?
+    <div>
+      <h1>Welcome to Regions</h1>
+      <p>Check random info about countries</p>
+      <InfoPanel
+        selected={this.state.selected}
+        updateSelectedCountry={(country: ICountryType) => {
+          this.updateSelectedCountry(country);
+          //this.state.countryList.push(country)
+        }
+        }
+        countries={this.props.countries}
+        covid={this.props.covid}
+        countryList={this.state.countryList}
+      />
+      <CovidDraggableTable countries={this.props.covid}></CovidDraggableTable>
+    </div>
+    : <div> Loading... </div>} </Layout>
+  )
+}
 }
 
 export default Index;
