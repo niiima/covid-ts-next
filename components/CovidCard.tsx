@@ -15,8 +15,9 @@ const CovidCards = (props: ICovidCardProps) => {
     const Panels = [] as any;
     if (props.covidInfoList.length) {
         props.covidInfoList.forEach(cardInfo => {
-            if (cardInfo)
+            if (cardInfo){
                 Panels.push(<CovidCardItem cardInfo={cardInfo} ></CovidCardItem>)
+            }
         });
     }
     return (

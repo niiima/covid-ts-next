@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
 import getCountries from '../utils/fetchInitialData';
 import { ICountryType } from '../interfaces/country.interface'
-import { ICovidType,ICovidTypeWithColors } from '../interfaces/covid.interface';
+import { ICovidType, ICovidTypeWithColors } from '../interfaces/covid.interface';
 //import CovidDraggableTable from '../components/CovidDraggableTable'
 
 //import App from 'next/app'
@@ -50,23 +50,36 @@ class Index extends React.Component<IAppProps, IAppState> {
 
   updateSelectedCountry(countryObject: ICountryType) {
     let selectedCovidInfo = this.state.covid.find(c => c.countryInfo.iso2 === countryObject.iso2);
-    if (selectedCovidInfo) {
-    let selectedCovidInfoFull:ICovidTypeWithColors = { ...selectedCovidInfo, colors: countryObject.colors }
+    let isOnDom = false;
 
-      let listArray = [...this.state.countryList.slice()];
-      this.setState((() => {
-        return {
-          countryList: [selectedCovidInfoFull, ...listArray],
-          selected: countryObject
-        };
-      }
-      ));
-    }
-    else {
+    if (!selectedCovidInfo) {
       this.setState({
         selected: countryObject
       });
+      return;
     }
+
+    this.state.countryList.forEach(country => {
+      if (country.countryInfo.iso2 === countryObject.iso2)
+        isOnDom = true;
+    });
+    //console.log(isOnDom);
+    if (isOnDom) {
+      this.setState({
+        selected: countryObject
+      });
+      return;
+    }
+    let selectedCovidInfoFull: ICovidTypeWithColors = { ...selectedCovidInfo, colors: countryObject.colors }
+
+    let listArray = [...this.state.countryList.slice()];
+
+    this.setState(() => {
+      return {
+        countryList: [selectedCovidInfoFull, ...listArray],
+        selected: countryObject
+      };
+    })
   }
 
   // updateSelectedCountryList(countryObject: ICountryType) {

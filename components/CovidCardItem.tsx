@@ -72,7 +72,7 @@ const CovidCardItem = (props) => {
     } = props.cardInfo;
     const cardColors = getFlagColors(colors);
     return (
-        <CovidInfoContainer key={countryInfo._id}>
+        <CovidInfoContainer key={countryInfo.iso2}>
             <CovidInfoContent>
 
                 <EqualDivider vertical={true} style={{ color: cardColors[0] }}>
