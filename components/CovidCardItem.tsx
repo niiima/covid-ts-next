@@ -10,9 +10,11 @@ const CovidInfoContent = styled.article`
 		width: 100%;
 	}
 	position: relative;
-	margin-bottom: 20px; 
-	padding-bottom: 30px; 
-    text-decoration: none;
+	margin-bottom: 10px; 
+	padding-bottom: 10px; 
+  text-decoration: none;
+  list-style: none;
+  transition:all 1s ease;
     .card__image{
         position:absolute;
         max-height:110px;
@@ -38,64 +40,75 @@ const CovidInfoContent = styled.article`
           }
         }
       }
-`
 
-const CovidInfoContainer = styled.section`
-margin: 4px; 
-list-style: none;
-width: 300px;
-height: 260px;
-display: flex;
-// padding: 2em;
-border: 3px solid ${props => props.color};
-//border-radius: 1.25rem;
-justify-content: stretch;//space-around;
-font-size: 1em;
-transition:all 1s ease;
-    &:hover{
-            background-color:lightgray;
+       &:hover{
+            background-color:${props => props.color ? props.color : "rgba(0,0,0,0.1)"};
             border-color: #444;
     }
 `
-const CovidCardItem = (props) => {
-    //console.log(cardInfo);
-    const {
-        countryInfo,
-        continent,
-        deathsPerOneMillion,
-        population,
-        todayCases,
-        todayDeaths,
-        todayRecovered,
-        country,
-        colors,
-    } = props.cardInfo;
-    const cardColors = getFlagColors(colors);
-    return (
-        <CovidInfoContainer key={countryInfo.iso2}>
-            <CovidInfoContent>
+const Info = styled.li`
+color: rgba(256,256,256,0.8); 
+// ${props => props.color ? props.color.length && typeof props.color === "string" ? props.color : props.color[1] : "rgba(0,0,0,0.9"};
+`
 
-                <EqualDivider vertical={true} style={{ color: cardColors[0] }}>
-                    {/* <EDChild color={cardColors[3]}> */}
-                        <img
+const CovidCardItem = (props) => {
+  //console.log(cardInfo);
+  const {
+    //countryInfo,
+    continent,
+    deathsPerOneMillion,
+    population,
+    todayCases,
+    todayDeaths,
+    todayRecovered,
+    country,
+    colors,
+  } = props.cardInfo;
+  const cardColors = getFlagColors(colors);
+  return (
+    // <CovidInfoContainer key={countryInfo.iso2}>
+    <CovidInfoContent color={cardColors[1]}>
+      <EqualDivider style={{ color: cardColors[0] }}>
+        {/* <EDChild color={cardColors[3]}> */}
+        {/* <img
                             // w20,w40,w80,w160,w320,w640,,w1280,w2560
                             src={"https://flagcdn.com/w160/" + countryInfo.iso2.toLowerCase() + `.png`}
                             width="160"
                             alt={country}
-                            className="card__image" />
-                    {/* </EDChild> */}
-                    <EDChild color={cardColors[1]}>{country}</EDChild>
-                    <EDChild color={cardColors[0]}><BiWorld size="30px" style={{ color: cardColors[1] ? cardColors[1] : cardColors[0], width: 35 }}></BiWorld>
-                        <span style={{ color: cardColors[2] ? cardColors[2] : cardColors[1] }}>{continent}</span></EDChild>
-                </EqualDivider>
-                <EqualDivider>
-                    <EDChild><li className="scnd-font-color" style={{ color: cardColors[2] ? cardColors[2] : cardColors[1] ? cardColors[1] : cardColors[0] }}>Deaths per each million: {deathsPerOneMillion}</li></EDChild>
-                    <EDChild><li className="scnd-font-color" >Total population {millify(population)}</li></EDChild>
-                    <EDChild><li className="scnd-font-color">cases {millify(todayCases)} | Recovered: {millify(todayRecovered)} | Deaths:{millify(todayDeaths)}</li></EDChild>
-                </EqualDivider>
-            </CovidInfoContent>
-        </CovidInfoContainer>
-    );
+                            className="card__image" /> */}
+        {/* </EDChild> */}
+        <EDChild color={cardColors[1]}>{country}</EDChild>
+        <EDChild color={cardColors[0]}><BiWorld size="30px" style={{ color: cardColors[1] ? cardColors[1] : cardColors[0], width: 35 }}></BiWorld>
+          <span style={{ color: cardColors[2] ? cardColors[2] : cardColors[1] }}>{continent}</span></EDChild>
+      </EqualDivider>
+      <EqualDivider vertical={true}>
+        <EDChild><Info>Deaths per each million: {deathsPerOneMillion}</Info></EDChild>
+        <EDChild><Info color={cardColors} colorIndex={2}>Total population {millify(population)}</Info></EDChild>
+        <EDChild><Info color={"brown"}>Cases: {millify(todayCases)}</Info></EDChild>
+        <EDChild><Info color={"green"}>Recovered: {millify(todayRecovered)}</Info></EDChild>
+        <EDChild><Info color={"red"}>Deaths:{millify(todayDeaths)}</Info></EDChild>
+      </EqualDivider>
+    </CovidInfoContent>
+    // </CovidInfoContainer>
+  );
 }
 
 export default CovidCardItem;
+
+// const CovidInfoContainer = styled.section`
+// margin: 4px; 
+// list-style: none;
+// width: 300px;
+// height: 260px;
+// display: flex;
+// // padding: 2em;
+// border: 3px solid ${props => props.color};
+// //border-radius: 1.25rem;
+// justify-content: stretch;//space-around;
+// font-size: 1em;
+// transition:all 1s ease;
+//     &:hover{
+//             background-color:lightgray;
+//             border-color: #444;
+//     }
+// `

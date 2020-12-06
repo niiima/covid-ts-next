@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+//import { useState, createRef } from 'react';
 import { ICountryType } from "../interfaces/country.interface";
 import { ICovidTypeWithColors } from "../interfaces/covid.interface";
 import CovidCardItem from './CovidCardItem'
@@ -8,15 +8,38 @@ export interface ICovidCardProps {
     selected: ICountryType;
 }
 
-
-
 const CovidCards = (props: ICovidCardProps) => {
     //console.log(props.covidInfoList)
+    // const [state, setState] = useState({
+    //     articles: props.covidInfoList.map(ci => {
+    //         return {
+    //             ...ci,
+    //             ref: createRef() /* Ref per section */
+    //         }
+    //     })
+    // });
+
+    // /* Move into parent/header */
+    // const handleNavigate = section => {
+
+    //     /* 
+    //     Access the "current element" of this sections ref. 
+    //     Treat this as the element of the div for this section.
+    //     */
+    //     let el = section.ref.current;
+
+    //     window.scrollTo({
+    //         behavior: "smooth",
+    //         left: 0,
+    //         top: el.offsetTop
+    //     });
+    // };
+
     const Panels = [] as any;
     if (props.covidInfoList.length) {
         props.covidInfoList.forEach(cardInfo => {
-            if (cardInfo){
-                Panels.push(<CovidCardItem cardInfo={cardInfo} ></CovidCardItem>)
+            if (cardInfo) {
+                Panels.push(<CovidCardItem cardInfo={cardInfo} key={cardInfo.countryInfo.iso2}></CovidCardItem>)
             }
         });
     }
@@ -26,7 +49,7 @@ const CovidCards = (props: ICovidCardProps) => {
         </CardsSection>)
 }
 
-const CardsSection = styled.div`
+const CardsSection = styled.section`
 display: -webkit-flex;
 display: flex;
 -webkit-justify-content: center;
