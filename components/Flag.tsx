@@ -1,12 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 //import  getRGB  from '../utils/getRGB';
 
-interface SetRgbCallBackType {
-    (rgb): void;
-}
 interface Props {
     country_code: string;
-    setrgb:SetRgbCallBackType
+    //setrgb:SetRgbCallBackType
 }
 
 const Flag = (props: Props) => {

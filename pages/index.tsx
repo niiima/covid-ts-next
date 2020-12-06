@@ -48,38 +48,50 @@ class Index extends React.Component<IAppProps, IAppState> {
     };
   }
 
-  updateSelectedCountry(countryObject: ICountryType) {
-    let selectedCovidInfo = this.state.covid.find(c => c.countryInfo.iso2 === countryObject.iso2);
-    let isOnDom = false;
-
+  updateSelectedCountry(country_code: string) {
+    let selectedCovidInfo = this.state.covid.find(c => c.countryInfo.iso2 === country_code);
+    console.log(country_code)
     if (!selectedCovidInfo) {
-      this.setState({
-        selected: countryObject
-      });
+      // this.setState({
+      //   selected: this.state.countries[0]
+      // });
+      console.log("!selectedCovidInfo")
       return;
     }
 
+    let isOnDom = false;
     this.state.countryList.forEach(country => {
-      if (country.countryInfo.iso2 === countryObject.iso2)
+      if (country.countryInfo.iso2 === country_code)
         isOnDom = true;
     });
     //console.log(isOnDom);
     if (isOnDom) {
-      this.setState({
-        selected: countryObject
-      });
+      console.log("OnDom")
+
+      // this.setState({
+      //   selected: countryObject
+      // });
       return;
     }
-    let selectedCovidInfoFull: ICovidTypeWithColors = { ...selectedCovidInfo, colors: countryObject.colors }
+
+    let countryObject = [...this.state.countries].find(({ iso2 }) => iso2 === country_code);
+    let selectedCovidInfoFull: ICovidTypeWithColors = {
+      ...selectedCovidInfo,
+      colors: countryObject ? countryObject.colors : [{ color: "#fff", percentage: 100 }]
+    }
 
     let listArray = [...this.state.countryList.slice()];
 
-    this.setState(() => {
-      return {
+    if (selectedCovidInfoFull) {
+      console.log("selectedCovidInfoFull Exist")
+
+      this.setState({
+
         countryList: [selectedCovidInfoFull, ...listArray],
-        selected: countryObject
-      };
-    })
+        selected: countryObject ? countryObject : this.state.selected
+
+      })
+    }
   }
 
   // updateSelectedCountryList(countryObject: ICountryType) {
@@ -100,14 +112,22 @@ class Index extends React.Component<IAppProps, IAppState> {
   }
 
   render() {
+    const options = this.state.countries.map(c => {
+      //console.log(c.iso2)
+      return {
+        value: c.iso2,
+        label: c.name
+      }
+    });
     return (<Layout>
       {this.state.initiated ?
         <div>
           <h1>Welcome to Regions</h1>
           <p>Check random info about countries</p>
           <InfoPanel
+            options={options}
             selected={this.state.selected}
-            updateSelectedCountry={(country: ICountryType) => {
+            updateSelectedCountry={(country: string) => {
               this.updateSelectedCountry(country);
               //this.state.countryList.push(country)
             }
