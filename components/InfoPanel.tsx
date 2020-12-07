@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Flag from './Flag';
 import { ICountryType } from '../interfaces/country.interface';
 import { ICovidType, ICovidTypeWithColors } from '../interfaces/covid.interface';
+//import {getColor} from '../utils/getFlagColors';
 import Pollution from './Pollution';
 import CovidCards from './CovidCard';
 import Select from 'react-select';
@@ -23,7 +24,9 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
   const [selectedValue, setSelectedValue] = useState(["IR"]) as any;
   props.updateSelectedCountry(selectedValue[selectedValue.length - 1])
   // handle onChange event of the dropdown
+
   const handleChange = (e) => {
+    console.log(e)
     console.log(selectedValue)
     props.updateSelectedCountry(selectedValue[selectedValue.length - 1])
     setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : []);
@@ -46,9 +49,9 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
   });
 
   const colourStyles = {
-    control: styles => ({ ...styles, backgroundColor: 'white' }),
+    control: styles => ({ ...styles, backgroundColor: 'lightgray' }),
     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-
+      //console.log(getColor(data.color,1))
       return {
         ...styles,
         backgroundColor: isDisabled
@@ -77,20 +80,18 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     multiValue: (styles, { data }) => {
       return {
         ...styles,
-        backgroundColor: data.color[1] ? alpha(data.color[1].color, 0.5) : alpha(data.color[0].color, 0.5) //.alpha(0.1).css(),
+        backgroundColor: chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white') > 9 ?  alpha(data.color[0].color, 0.9) : data.color[1] ? alpha(data.color[1].color, 0.9): "black"//.alpha(0.1).css(),
       };
 
     },
     multiValueLabel: (styles, { data }) => {
-      console.log(chroma.contrast(data.color[0].color, 'white'))
+      console.log(chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white'))
 
       return {
         ...styles,
-        color: chroma.contrast(data.color[0].color, 'white') > 2 ? data.color[1] ? data.color[1] : "blaCK" : 'purple'//data.color
+        color: chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white') > 9 ? data.color[1] ? data.color[1].color : data.color[0].color : 'purple'//data.color
       }
-    }
-
-    ,
+    },
     multiValueRemove: (styles, { data }) => {
       return {
         ...styles,
@@ -100,15 +101,12 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
           color: 'white',
         },
       }
-
     },
 
     input: styles => ({ ...styles, ...dot() }),
     placeholder: styles => ({ ...styles, ...dot() }),
     singleValue: (styles, { data }) => {
-
       return { ...styles, ...dot(data.color[0].color) }
-
     },
   };
 
@@ -122,12 +120,6 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
       </ul>
       <br />
       <Select
-        // defaultValue={props.countryList.map(c=>{
-        //   return {
-        //     value:c.countryInfo.iso2,
-        //     label:c.country
-        //   }
-        // })}
         value={props.options.filter(obj => selectedValue.includes(obj.value))}
         defaultValue={props.selected.iso2}
         onChange={e => handleChange(e)}

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { BiWorld } from 'react-icons/bi'
 import millify from 'millify';
-import getFlagColors from '../utils/getFlagColors';
+import { getFlagColors } from '../utils/getFlagColors';
 import { EqualDivider, EDChild } from '../components/FlexDevider';
 
 

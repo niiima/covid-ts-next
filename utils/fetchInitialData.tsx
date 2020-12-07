@@ -27,7 +27,7 @@ const getCountries = async () => {
     const colors: CountryFlagColors[] = Object.values(flagData);
     //console.log(typeof colors)
     const counts = Object.keys(flagData);
-    const emptyColorList = [{color:"#ccc", percentage :50}, {color:"#999", percentage :50}]
+    const emptyColorList = [{color:"#fff", percentage :50}, {color:"#999", percentage :50}]
     const list = counts.map((c, i) => {
         // console.log(c)
         const row = mutedCountryList.find(country => {
