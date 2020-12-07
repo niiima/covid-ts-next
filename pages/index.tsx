@@ -19,7 +19,7 @@ interface IAppState {
   covid: ICovidType[];
   initiated: boolean;
   selected: ICountryType;
-  countryList: ICovidTypeWithColors[];
+  countryList: string[]//ICovidTypeWithColors[];
 }
 
 class Index extends React.Component<IAppProps, IAppState> {
@@ -59,35 +59,36 @@ class Index extends React.Component<IAppProps, IAppState> {
       return;
     }
 
-    let isOnDom = false;
-    this.state.countryList.forEach(country => {
-      if (country.countryInfo.iso2 === country_code)
-        isOnDom = true;
-    });
-    //console.log(isOnDom);
-    if (isOnDom) {
-      console.log("OnDom")
+    // let isOnDom = false;
+    // this.state.countryList.forEach(country => {
+    //   if (country === country_code)
+    //     isOnDom = true;
+    // });
+    // //console.log(isOnDom);
+    // if (isOnDom) {
+    //   console.log("OnDom")
 
-      // this.setState({
-      //   selected: countryObject
-      // });
-      return;
-    }
+    //   // this.setState({
+    //   //   selected: countryObject
+    //   // });
+    //   return;
+    // }
 
     let countryObject = [...this.state.countries].find(({ iso2 }) => iso2 === country_code);
+    console.log(selectedCovidInfo)
     let selectedCovidInfoFull: ICovidTypeWithColors = {
       ...selectedCovidInfo,
       colors: countryObject ? countryObject.colors : [{ color: "#fff", percentage: 100 }]
     }
 
-    let listArray = [...this.state.countryList.slice()];
+    //let listArray = [...this.state.countryList.slice()];
 
     if (selectedCovidInfoFull) {
       console.log("selectedCovidInfoFull Exist")
 
       this.setState({
 
-        countryList: [selectedCovidInfoFull, ...listArray],
+        //countryList: [selectedCovidInfoFull, ...listArray],
         selected: countryObject ? countryObject : this.state.selected
 
       })
