@@ -27,8 +27,7 @@ const getCountries = async () => {
     const colors: CountryFlagColors[] = Object.values(flagData);
     //console.log(typeof colors)
     const counts = Object.keys(flagData);
-    // console.log(colors[2])
-    // console.log(counts[2])
+    const emptyColorList = [{color:"#ccc", percentage :50}, {color:"#999", percentage :50}]
     const list = counts.map((c, i) => {
         // console.log(c)
         const row = mutedCountryList.find(country => {
@@ -36,6 +35,7 @@ const getCountries = async () => {
             if (country.iso2 === c.toUpperCase())
                 return {
                     ...country,
+                    //colors:colors[i]
                     //iso2: country.iso2.toLowerCase()
                 }
         });
@@ -50,13 +50,15 @@ const getCountries = async () => {
         else {
             console.log(c, i)
             return {
-                
+                ...mutedCountryList[i],
+                colors:emptyColorList
                 
             }
         }
         // }
     });
 
+    console.log(list[141])
     const covidData = await fetch("https://corona.lmao.ninja/v2/countries?yesterday=&sort=").then(response => {
         return response.json()
     }).then(data => data).catch(err => console.log(err));
@@ -66,7 +68,11 @@ const getCountries = async () => {
             console.log(el.iso2, i)
     })
     return {
-        countries: list.map(c=>c),
+        countries: list.map(c => {
+            if (c) {
+                return c
+            }
+        }),
         data: covidData
     };
 }

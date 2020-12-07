@@ -116,7 +116,8 @@ class Index extends React.Component<IAppProps, IAppState> {
       //console.log(c.iso2)
       return {
         value: c.iso2,
-        label: c.name
+        label: c.name,
+        color:c.colors
       }
     });
     return (<Layout>
