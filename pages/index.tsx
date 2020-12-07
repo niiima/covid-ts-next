@@ -7,7 +7,6 @@ import getCountries from '../utils/fetchInitialData';
 import { ICountryType } from '../interfaces/country.interface'
 import { ICovidType, ICovidTypeWithColors } from '../interfaces/covid.interface';
 //import CovidDraggableTable from '../components/CovidDraggableTable'
-
 //import App from 'next/app'
 interface IAppProps {
   covid: ICovidType[];

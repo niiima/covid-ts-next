@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import Navbar from './Navbar';
-import { createContext } from 'react'
+import { createContext, Fragment } from 'react';
+import GlobalStyle from '../utils/style'
+
 interface LayoutProps {
   title?: string;
 }
@@ -20,7 +22,8 @@ const ThemeContext = createContext(themes.light);
 
 const Layout: React.FunctionComponent<LayoutProps> = (props) => (
   <ThemeContext.Provider value={themes.dark}>
-    <div>
+    <Fragment>
+      <GlobalStyle />
       <Head>
         <title>Countries</title>
         <meta charSet="utf-8" />
@@ -31,7 +34,7 @@ const Layout: React.FunctionComponent<LayoutProps> = (props) => (
       <div className="container">
         {props.children}
       </div>
-    </div>
+    </Fragment>
   </ThemeContext.Provider>
 
 );

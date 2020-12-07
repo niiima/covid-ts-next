@@ -9,6 +9,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import chroma from 'chroma-js';
 import alpha from 'color-alpha'
+//import styled from 'styled-components'
 interface IInfoPanelProps {
   selected: ICountryType;
   covid: ICovidType[];
@@ -85,7 +86,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
 
     },
     multiValueLabel: (styles, { data }) => {
-      console.log(chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white'))
+      //console.log(chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white'))
 
       return {
         ...styles,
@@ -104,9 +105,11 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     },
 
     input: styles => ({ ...styles, ...dot() }),
-    placeholder: styles => ({ ...styles, ...dot() }),
-    singleValue: (styles, { data }) => {
-      return { ...styles, ...dot(data.color[0].color) }
+    placeholder: styles => ({ ...styles,  color:"red", ...dot() }),
+    singleValue: (styles) => {
+      return { ...styles, 
+        color:"red",
+      ...dot("yellow") }
     },
   };
 
@@ -130,6 +133,8 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
         styles={colourStyles}
         // defaultValue={[colourOptions[4], colourOptions[5]]}
         isMulti
+        menuContainerStyle={{top: 'auto', bottom: '100%'}}
+        menuPlacement = "top"
       />
       <br />
       <CovidCards selected={props.selected} covidInfoList={props.countryList}></CovidCards>
@@ -137,5 +142,12 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     </div >
   );
 }
+
+// styled(Select)`
+// .drop-up .Select-menu-outer {
+//   top: auto;
+//   bottom: 100%;
+// }
+// `
 
 export default InfoPanel;
