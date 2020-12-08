@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 //import { useState, createRef } from 'react';
 import { ICountryType } from "../interfaces/country.interface";
-import { ICovidTypeWithColors } from "../interfaces/covid.interface";
+//import { ICovidTypeWithColors } from "../interfaces/covid.interface";
+import { ISuperCountryType } from "../interfaces/data.interface";
 import CovidCardItem from './CovidCardItem'
 export interface ICovidCardProps {
-    covidInfoList: ICovidTypeWithColors[];
+    covidInfoList: ISuperCountryType[];
     selected: ICountryType;
 }
 
@@ -39,13 +40,13 @@ const CovidCards = (props: ICovidCardProps) => {
     if (props.covidInfoList.length) {
         props.covidInfoList.forEach(cardInfo => {
             if (cardInfo) {
-                Panels.push(<CovidCardItem cardInfo={cardInfo} key={cardInfo.countryInfo.iso2}></CovidCardItem>)
+                Panels.push(<CovidCardItem cardInfo={cardInfo}  key={cardInfo.iso2}></CovidCardItem>)
             }
         });
     }
     return (
         <CardsSection>
-            {Panels.length ? Panels : (<p className="no-content" >No data about {props.selected.name}</p>)}
+            {Panels.length ? Panels.reverse() : (<p className="no-content" >No data about {props.selected.name}</p>)}
         </CardsSection>)
 }
 

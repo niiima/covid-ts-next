@@ -3,14 +3,14 @@ import { v4 as uuidv4 } from 'uuid';
 //import Posts from '../components/Posts';
 import { ICountryType, CountryFlagColors } from '../interfaces/country.interface';
 
-const countryList = require('../public/country-list.json');
+const countryList: ICountryType[]  = require('../public/country-list.json');
 const flagData = require('../public/flag_data.json');
 
 const getCountries = async () => {
 
     const mutedCountryList: ICountryType[] = countryList.slice(0).sort(function (c1, c2) {
-        const name1 = c1.name//.toLowerCase();
-        const name2 = c2.name//.toLowerCase();
+        const name1 = c1.name;
+        const name2 = c2.name;
         if (name1 > name2) { return 1; }
         if (name1 < name2) { return -1; }
         return 0;
@@ -26,16 +26,14 @@ const getCountries = async () => {
 
     const colors: CountryFlagColors[] = Object.values(flagData);
     //console.log(typeof colors)
-    const counts = Object.keys(flagData);
-    const emptyColorList = [{color:"#fff", percentage :50}, {color:"#999", percentage :50}]
-    const list = counts.map((c, i) => {
-        // console.log(c)
+    const countryKeys = Object.keys(flagData);
+    const emptyColorList = [{ color: "#fff", percentage: 50 }, { color: "#999", percentage: 50 }]
+    const list = countryKeys.map((c, i) => {
         const row = mutedCountryList.find(country => {
-            //console.log(typeof c)
             if (country.iso2 === c.toUpperCase())
                 return {
                     ...country,
-                    //colors:colors[i]
+                    colors:colors[i]
                     //iso2: country.iso2.toLowerCase()
                 }
         });
@@ -51,29 +49,42 @@ const getCountries = async () => {
             console.log(c, i)
             return {
                 ...mutedCountryList[i],
-                colors:emptyColorList
-                
+                colors: [...emptyColorList]
             }
         }
         // }
     });
 
-    console.log(list[141])
+    //console.log(list[141])
     const covidData = await fetch("https://corona.lmao.ninja/v2/countries?yesterday=&sort=").then(response => {
         return response.json()
     }).then(data => data).catch(err => console.log(err));
 
-    mutedCountryList.forEach((el, i) => {
-        if (!el.iso2)
-            console.log(el.iso2, i)
-    })
-    return {
-        countries: list.map(c => {
-            if (c) {
-                return c
+    // mutedCountryList.forEach((el, i) => {
+    //     if (!el.iso2)
+    //         console.log(el.iso2, i)
+    // });
+    //console.log(covidData)
+    const data = list.map((c) => {
+        if (c) {
+            let covidInfo = covidData.find(data => {
+                // if (!data.countryInfo)
+                //     console.log(data)
+                if (data.countryInfo.iso2 === c.iso2)
+                    return data 
+            });
+            return {
+                ...c,
+                //colors:[...emptyColorList],
+                covid: covidInfo ? covidInfo : null
             }
-        }),
-        data: covidData
+        }
+    })
+    //console.log(data)
+    return {
+        //countries:
+        data: data
+        //data: covidData
     };
 }
 

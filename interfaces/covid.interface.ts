@@ -1,4 +1,4 @@
-import {CountryFlagColors} from './country.interface';
+//import {CountryFlagColors} from './country.interface';
 
 type ICountryInfo = {
     flag: string;
@@ -33,6 +33,6 @@ export interface ICovidType {
     updated: string;
 }
 
-export interface ICovidTypeWithColors extends ICovidType{
-    colors:CountryFlagColors[]
-}
+// export interface ICovidTypeWithColors extends ICovidType{
+//     colors:CountryFlagColors[]
+// }

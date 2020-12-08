@@ -22,14 +22,14 @@ const ThemeContext = createContext(themes.light);
 
 const Layout: React.FunctionComponent<LayoutProps> = (props) => (
   <ThemeContext.Provider value={themes.dark}>
+    <Head>
+      <title>Countries</title>
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css" />
+    </Head>
     <Fragment>
       <GlobalStyle />
-      <Head>
-        <title>Countries</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css" />
-      </Head>
       <Navbar />
       <div className="container">
         {props.children}

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Flag from './Flag';
 import { ICountryType } from '../interfaces/country.interface';
-import { ICovidType, ICovidTypeWithColors } from '../interfaces/covid.interface';
+// import { ICovidType } from '../interfaces/covid.interface';
+import { ISuperCountryType,IOptionType } from '../interfaces/data.interface';
 import {getColor} from '../utils/getFlagColors';
 import Pollution from './Pollution';
 import CovidCards from './CovidCard';
@@ -12,18 +13,20 @@ import alpha from 'color-alpha'
 //import styled from 'styled-components'
 interface IInfoPanelProps {
   selected: ICountryType;
-  covid: ICovidType[];
-  countries: ICountryType[];//CountriesType[],
+  //covid: ICovidType[];
+  //countries: ICountryType[];//CountriesType[],
+
   updateSelectedCountry: (country_code: string) => void;
-  countryList: ICovidTypeWithColors[];
-  options: any
+  // countryList: ISuperCountryType[];
+  options: IOptionType[]
+  data: ISuperCountryType[];
 }
 
 const animatedComponents = makeAnimated();
 
 const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
   const [selectedValue, setSelectedValue] = useState(["IR"]) as any;
-  props.updateSelectedCountry(selectedValue[selectedValue.length - 1])
+  //props.updateSelectedCountry(selectedValue[selectedValue.length - 1])
   // handle onChange event of the dropdown
 
   const handleChange = (e) => {
@@ -77,13 +80,13 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
       };
 
     },
-    multiValue: (styles, { data }) => {
-      return {
+    multiValue: (styles, { data }) => ({
+     
         ...styles,
         backgroundColor:  data.color[1] ? data.color[1].color :alpha(data.color[0].color, 1.8)//.alpha(0.1).css(),
-      };
+      
 
-    },
+    }),
     multiValueLabel: (styles, { data }) => {
       //console.log(chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white'))
       return {
@@ -135,7 +138,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
         menuPlacement = "top"
       />
       <br />
-      <CovidCards selected={props.selected} covidInfoList={props.countryList}></CovidCards>
+      <CovidCards selected={props.selected} covidInfoList={props.data}></CovidCards>
       <Pollution selected={props.selected.name} ></Pollution>
     </div >
   );
