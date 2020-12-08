@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import Flag from './Flag';
 import { ICountryType } from '../interfaces/country.interface';
 import { ICovidType, ICovidTypeWithColors } from '../interfaces/covid.interface';
-//import {getColor} from '../utils/getFlagColors';
+import {getColor} from '../utils/getFlagColors';
 import Pollution from './Pollution';
 import CovidCards from './CovidCard';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-import chroma from 'chroma-js';
+//import chroma from 'chroma-js';
 import alpha from 'color-alpha'
+//import styled from 'styled-components'
 interface IInfoPanelProps {
   selected: ICountryType;
   covid: ICovidType[];
@@ -33,10 +34,9 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     //console.log(selectedValue[selectedValue.length ?  - 1])
   }
 
-  const dot = (color = '#ccc') => ({
+  const dot = (color = '#bbbbbb') => ({
     alignItems: 'center',
     display: 'flex',
-
     ':before': {
       backgroundColor: color,
       borderRadius: 10,
@@ -49,7 +49,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
   });
 
   const colourStyles = {
-    control: styles => ({ ...styles, backgroundColor: 'lightgray' }),
+    control: styles => ({ ...styles, backgroundColor: '#999' }),
     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
       //console.log(getColor(data.color,1))
       return {
@@ -57,22 +57,22 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
         backgroundColor: isDisabled
           ? null
           : isSelected
-            ? data.color[0].color
+            ? getColor(data.color,1,1,false)
             : isFocused
-              ? data.color[1] ? alpha(data.color[1], 0.7) : alpha(data.color[0], 0.7)//.alpha(0.1).css()
-              : null,
+              ? alpha(data.color[1] ? data.color[1].color : data.color[0].color,0.1)
+              : data.color[1] ? data.color[1].color : "white" ,
         color: isDisabled
-          ? 'yellow'
+          ? 'lightgray'
           : isSelected
-            ? chroma.contrast(data.color[0].color, 'white') > 2
-              ? 'green'
-              : 'black'
-            : data.color[1] ? data.color[1].color : "gray" ,
+            ? data.color[1].color//chroma.contrast(data.color[0].color, 'white') > 2
+              // ? 'green'
+              // : 'black'
+            : data.color[0].color ,//data.color[1] ? data.color[1].color : "gray" ,
         cursor: isDisabled ? 'not-allowed' : 'default',
 
         ':active': {
           ...styles[':active'],
-          backgroundColor: !isDisabled || isSelected ? data.color[1] ? alpha(data.color[1].color, 0.7) : alpha(data.color[0].color, 0.7) : "red"//.alpha(0.3).css()),
+          backgroundColor: !isDisabled || (isSelected ? data.color[1] ? data.color[1].color : data.color[0].color : "white")//alpha(data.color[1].color,1.2))//.alpha(0.3).css()),
           },
       };
 
@@ -80,22 +80,22 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     multiValue: (styles, { data }) => {
       return {
         ...styles,
-        backgroundColor: chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white') > 9 ?  alpha(data.color[0].color, 0.9) : data.color[1] ? alpha(data.color[1].color, 0.9): "black"//.alpha(0.1).css(),
+        backgroundColor:  data.color[1] ? data.color[1].color :alpha(data.color[0].color, 1.8)//.alpha(0.1).css(),
       };
 
     },
     multiValueLabel: (styles, { data }) => {
-      console.log(chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white'))
-
+      //console.log(chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white'))
       return {
         ...styles,
-        color: chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white') > 9 ? data.color[1] ? data.color[1].color : data.color[0].color : 'purple'//data.color
+        color: getColor(data.color,0,1,false)//data.color
       }
     },
     multiValueRemove: (styles, { data }) => {
+      //console.log(getColor(data.color,0,1,false))
       return {
         ...styles,
-        color: data.color[0],
+        color: data.color[0].color,
         ':hover': {
           backgroundColor: alpha(data.color[1] ? data.color[1].color : data.color[0].color, 0.9),
           color: 'white',
@@ -105,9 +105,10 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
 
     input: styles => ({ ...styles, ...dot() }),
     placeholder: styles => ({ ...styles, ...dot() }),
-    singleValue: (styles, { data }) => {
-      return { ...styles, ...dot(data.color[0].color) }
-    },
+    // singleValue: (styles) => {
+    //   return { ...styles, 
+    //   ...dot("#12ae89") }
+    // },
   };
 
 
@@ -130,6 +131,8 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
         styles={colourStyles}
         // defaultValue={[colourOptions[4], colourOptions[5]]}
         isMulti
+        menuContainerStyle={{top: 'auto', bottom: '100%'}}
+        menuPlacement = "top"
       />
       <br />
       <CovidCards selected={props.selected} covidInfoList={props.countryList}></CovidCards>
@@ -137,5 +140,12 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     </div >
   );
 }
+
+// styled(Select)`
+// .drop-up .Select-menu-outer {
+//   top: auto;
+//   bottom: 100%;
+// }
+// `
 
 export default InfoPanel;

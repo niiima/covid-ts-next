@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import {  useRef, useState } from 'react'
 //import  getRGB  from '../utils/getRGB';
 
 interface Props {
@@ -13,7 +13,7 @@ const Flag = (props: Props) => {
     //     getRGB(ref.current)
     //     props.setrgb()
     // },[]);
-    useEffect(() => console.log("Effect Used"))
+    //useEffect(() => console.log("Effect Used"))
     const imgFlag = useRef<HTMLImageElement>(null);
 
     //useEffect()

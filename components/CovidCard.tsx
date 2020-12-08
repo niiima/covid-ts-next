@@ -44,7 +44,7 @@ const CovidCards = (props: ICovidCardProps) => {
         });
     }
     return (
-        <CardsSection color={{ color: "#ccc" }}>
+        <CardsSection>
             {Panels.length ? Panels : (<p className="no-content" >No data about {props.selected.name}</p>)}
         </CardsSection>)
 }

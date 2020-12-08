@@ -52,7 +52,7 @@ color: rgba(256,256,256,0.8);
 `
 
 const CovidCardItem = (props) => {
-  //console.log(cardInfo);
+  console.log(props.cardInfp);
   const {
     //countryInfo,
     continent,

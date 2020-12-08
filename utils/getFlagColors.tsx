@@ -1,5 +1,7 @@
 import { CountryFlagColors } from '../interfaces/country.interface';
 import alpha from 'color-alpha'
+//import chroma from 'chroma-js';
+
 export const getFlagColors = (colors: CountryFlagColors[]) => {
     let arr;
     if (colors)
@@ -8,44 +10,67 @@ export const getFlagColors = (colors: CountryFlagColors[]) => {
     return arr
 }
 
-export const getColor = (list: CountryFlagColors[], key: number, a = 1) => {
-    const sortedList = sortColors(list);
-    //let count = sortedList.length;
-console.log(sortedList)
-    if (sortedList[key])
-        return sortedList[key].color
+export const getColor = (list: CountryFlagColors[], key: number, a = 1, isWhiteOk: boolean = true) => {
+    const sortedList = list;//sortColors(list);
 
-    let index = key - 1;
-    const rec = (l, i) => {
-        //l.reduceRight((_, item) => console.log(item), null);
-        if (i < 0) {
-            return "white"
+    let color = findColor(sortedList, key)
+    //console.log(a)
+    let coloredConditional = whiteOrCustom(color, isWhiteOk,list,key,a) || "#999999"
+    // console.log(coloredConditional)
+    return coloredConditional //alpha(coloredConditional, a)
+}
+
+function findColor(l, index) {
+    let counter = index;
+    if (counter < 0 || counter == 0) {
+        //debugger
+        return l[0].color
+    }
+    else {
+
+        if (l[counter] && l[counter] != undefined) {
+            //console.log(l[counter].color)
+            return l[counter].color
         }
         else {
-            if (l[index])
-                return l[index].color
-            else
-                rec(l, index--)
+
+            console.log(l)
+            for (let i = counter--; i > 0; i++) {
+                // console.log("loop")
+                // console.log(l)
+                if (l[i])
+                    return l[i].color
+            }
+            return l[0] || "#88cc21"
         }
     }
-
-    let color = rec(sortedList,index)
-    console.log(color)
-    return alpha(color,a)
-    
 }
 
-function sortColors(list: CountryFlagColors[]) {
-    let sortedList: CountryFlagColors[] = [];//[...list].slice();
-    list.forEach(el => sortedList.push(el));
-    sortedList.sort(function (c1, c2) {
-        const p1 = c1.percentage//.toLowerCase();
-        const p2 = c2.percentage//.toLowerCase();
-        if (p1 > p2) { return 1; }
-        if (p1 < p2) { return -1; }
-        return 0;
-    })
-    return sortedList;
+function whiteOrCustom(color, isWhiteOk, list, index,a) {
+    if (color === "white" || color === "#fff" || color === "#ffffff") {
+        if (isWhiteOk) {
+            return color
+        }
+        else {
+            if (index === 0)
+                return alpha(color,a)//"#555555"
+            else
+            if(list[index+1] && list[index+1]!= undefined)
+                return list[index+1].color || "red"
+        }
+    }
 }
-//export default getFlagColors;
+
+// function sortColors(list: CountryFlagColors[]) {
+//     let sortedList: CountryFlagColors[] = [];//[...list].slice();
+//     list.forEach(el => sortedList.push(el));
+//     sortedList.sort(function (c1, c2) {
+//         const p1 = c1.percentage//.toLowerCase();
+//         const p2 = c2.percentage//.toLowerCase();
+//         if (p1 > p2) { return 1; }
+//         if (p1 < p2) { return -1; }
+//         return 0;
+//     })
+//     return sortedList;
+// }
 
