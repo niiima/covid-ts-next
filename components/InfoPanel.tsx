@@ -25,7 +25,7 @@ interface IInfoPanelProps {
 const animatedComponents = makeAnimated();
 
 const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
-  const [selectedValue, setSelectedValue] = useState(["IR"]) as any;
+  const [selectedValue, setSelectedValue] = useState([]) as any;
   //props.updateSelectedCountry(selectedValue[selectedValue.length - 1])
   // handle onChange event of the dropdown
 
@@ -62,7 +62,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
           : isSelected
             ? getColor(data.color,1,1,false)
             : isFocused
-              ? alpha(data.color[1] ? data.color[1].color : data.color[0].color,0.1)
+              ? alpha(data.color[1] ? data.color[1].color : data.color[0].color,0.3)
               : data.color[1] ? data.color[1].color : "white" ,
         color: isDisabled
           ? 'lightgray'
@@ -84,8 +84,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
      
         ...styles,
         backgroundColor:  data.color[1] ? data.color[1].color :alpha(data.color[0].color, 1.8)//.alpha(0.1).css(),
-      
-
+    
     }),
     multiValueLabel: (styles, { data }) => {
       //console.log(chroma.contrast(data.color[0].color, data.color[1] ? data.color[1].color : 'white'))
@@ -119,12 +118,13 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     <div>
       <ul className="list-group">
         <li className="list-group-item">
-          <Flag country_code={props.selected.iso2} />
+          <Flag countryCode={props.selected.iso2} />
         </li>
       </ul>
       <br />
       <Select
-        value={props.options.filter(obj => selectedValue.includes(obj.value))}
+        value={props.options.filter(obj => selectedValue.includes(obj.value)).slice().reverse()}
+        //value={props.selected.iso2}
         defaultValue={props.selected.iso2}
         onChange={e => handleChange(e)}
         options={props.options}
@@ -138,7 +138,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
         menuPlacement = "top"
       />
       <br />
-      <CovidCards selected={props.selected} covidInfoList={props.data}></CovidCards>
+      <CovidCards selected={props.selected} covidInfoList={props.data.filter(obj => selectedValue.includes(obj.iso2))}></CovidCards>
       <Pollution selected={props.selected.name} ></Pollution>
     </div >
   );

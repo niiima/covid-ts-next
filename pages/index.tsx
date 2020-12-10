@@ -5,7 +5,6 @@ import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
 import getCountries from '../utils/fetchInitialData';
 import { IOptionType, ISuperCountryType } from '../interfaces/data.interface';
-
 //import CovidDraggableTable from '../components/CovidDraggableTable'
 //import App from 'next/app'
 interface IAppProps {

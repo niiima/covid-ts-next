@@ -1,20 +1,21 @@
-import {  useRef, useState } from 'react'
+// import {  useRef}from 'react'
+//import { useState } from 'react'
 //import  getRGB  from '../utils/getRGB';
 
 interface Props {
-    country_code: string;
+    countryCode: string;
     //setrgb:SetRgbCallBackType
 }
 
 const Flag = (props: Props) => {
-    const [hover, setHover] = useState(cs => ({ ...cs, isHover: false }));
+    //const [hover, setHover] = useState(cs => ({ ...cs, isHover: false }));
 
     // const imgFlag = useCallback(()=>{
     //     getRGB(ref.current)
     //     props.setrgb()
     // },[]);
     //useEffect(() => console.log("Effect Used"))
-    const imgFlag = useRef<HTMLImageElement>(null);
+    //const imgFlag = useRef<HTMLImageElement>(null);
 
     //useEffect()
     // (()=>{
@@ -23,26 +24,31 @@ const Flag = (props: Props) => {
     //     //props.setrgb(rgb)
     // });
 
-    function logMouseEnter() {
-        setHover({ isHover: true })
-    }
-    function logMouseLeave() {
-        setHover({ isHover: false });
-    }
-    function checkCountryHasPollutionInfo() {
-        console.log("checkCountryHasPollutionInfo")
+    // function logMouseEnter() {
+    //     setHover({ isHover: true })
+    // }
+    // function logMouseLeave() {
+    //     setHover({ isHover: false });
+    // }
+    // function checkCountryHasPollutionInfo() {
+    //     console.log("checkCountryHasPollutionInfo")
 
-        console.log(imgFlag);
-    }
+    //     console.log(props);
+    // }
     return (//<button data={selected} onClick={checkCountryHasPollutionInfo} > 
         <span className="badge badge-primary"
-            onMouseEnter={logMouseEnter}
-            onMouseLeave={logMouseLeave}
-            onClick={checkCountryHasPollutionInfo}
+            // onMouseEnter={logMouseEnter}
+            // onMouseLeave={logMouseLeave}
+            // onClick={checkCountryHasPollutionInfo}
         >
-            {!hover.isHover ?
-                <img ref={imgFlag} src={`https://www.countryflags.io/${props.country_code}/flat/64.png`} /> :
-                <img src={`https://www.countryflags.io/${props.country_code}/shiny/64.png`} />}
+            {/* {!hover.isHover ? */}
+            <img
+                // w20,w40,w80,w160,w320,w640,,w1280,w2560
+                src={"https://flagcdn.com/w40/" + props.countryCode.toLowerCase() + `.png`}
+                width="40"
+
+                alt={props.countryCode} />
+         
         </span>
         // </button>
     )
