@@ -1,4 +1,4 @@
-//import {CountryFlagColors} from './country.interface';
+//import {IFlagColorType} from './country.interface';
 
 type ICountryInfo = {
     flag: string;

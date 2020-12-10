@@ -4,8 +4,9 @@ import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
 import getCountries from '../utils/fetchInitialData';
 import { IOptionType, ISuperCountryType } from '../interfaces/data.interface';
+//import { sortCountries} from '../utils/sortCountries'
 //import CovidDraggableTable from '../components/CovidDraggableTable'
-//import App from 'next/app'
+
 interface IAppProps {
   options: IOptionType[];
   data: ISuperCountryType[];
@@ -35,10 +36,10 @@ class Index extends React.Component<IAppProps, IAppState> {
         const { data } = await getCountries();
     return {
       data: data,
-      options: data.map((item) => {
+      options: data.map((item,index) => {
         if (item)
           return {
-            index: item.index,
+            index: index,
             value: item.iso2,
             label: item.name,
             color: item.colors

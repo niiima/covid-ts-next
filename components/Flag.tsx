@@ -35,7 +35,7 @@ const Flag = (props: Props) => {
 }
 
 const FlagContainer = styled.span`
-border:1px solid ${props => props.colors[0]}
+border:1px solid ${props => props.colors[0]};
 transition : all 1s ease-in-out;
 & img {
     filter: contrast(80%);

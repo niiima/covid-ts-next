@@ -17,12 +17,18 @@ const CovidCardItem = (props: ICardItemProps) => {
     gsap.from(itemRef.current, {
       autoAlpha: 0,
       ease: 'none',
-      delay: 0.2,
-      rotation: 10
+      delay: 0.1,
+      rotation: 0,
+      //backgroundColor: "transparent",
+      x: -20,
+      duration: 2
     });
-    gsap.to(itemRef.current, {
-      x: -10, duration: 1, delay: 0,
-    });
+    // gsap.to(itemRef.current, {
+    //   x: -10,
+    //   duration: 1,
+    //   delay: 0,
+    //   backgroundColor: props.cardInfo.colors[0].color,
+    // });
   }, []);
 
   const cardColors = getFlagColors(colors);
@@ -35,9 +41,7 @@ const CovidCardItem = (props: ICardItemProps) => {
       todayDeaths,
       todayRecovered,
       country,
-
     } = covid;
-
 
     return (
 

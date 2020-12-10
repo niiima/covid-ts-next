@@ -1,8 +1,8 @@
-import { CountryFlagColors } from '../interfaces/country.interface';
+import { IFlagColorType } from '../interfaces/country.interface';
 import alpha from 'color-alpha'
 //import chroma from 'chroma-js';
 
-export const getFlagColors = (colors: CountryFlagColors[]) => {
+export const getFlagColors = (colors: IFlagColorType[]) => {
     let arr;
     if (colors)
         arr = colors.map(c => c.color);
@@ -10,7 +10,7 @@ export const getFlagColors = (colors: CountryFlagColors[]) => {
     return arr
 }
 
-export const getColor = (list: CountryFlagColors[], key: number, a = 1, isWhiteOk: boolean = true) => {
+export const getColor = (list: IFlagColorType[], key: number, a = 1, isWhiteOk: boolean = true) => {
     const sortedList = list;//sortColors(list);
 
     let color = findColor(sortedList, key)
@@ -61,8 +61,8 @@ function whiteOrCustom(color, isWhiteOk, list, index,a) {
     }
 }
 
-// function sortColors(list: CountryFlagColors[]) {
-//     let sortedList: CountryFlagColors[] = [];//[...list].slice();
+// function sortColors(list: IFlagColorType[]) {
+//     let sortedList: IFlagColorType[] = [];//[...list].slice();
 //     list.forEach(el => sortedList.push(el));
 //     sortedList.sort(function (c1, c2) {
 //         const p1 = c1.percentage//.toLowerCase();
