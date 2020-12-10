@@ -46,7 +46,7 @@ const CovidCards = (props: ICovidCardProps) => {
     }
     return (
         <CardsSection>
-            {Panels.length ? Panels.slice().reverse() : (<p className="no-content" >No data about {props.selected.name}</p>)}
+            {Panels.length ? Panels.slice(0).reverse() : (<p className="no-content" >No data about {props.selected.name}</p>)}
         </CardsSection>)
 }
 

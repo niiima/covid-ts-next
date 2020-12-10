@@ -3,13 +3,28 @@ import { BiWorld } from 'react-icons/bi'
 import millify from 'millify';
 import { getFlagColors } from '../utils/getFlagColors';
 import { EqualDivider, EDChild } from '../components/FlexDevider';
-import { ISuperCountryType } from '../interfaces/data.interface'
+import { ISuperCountryType } from '../interfaces/data.interface';
+import gsap from 'gsap';
+import { useRef, useEffect } from 'react'
 interface ICardItemProps {
   cardInfo: ISuperCountryType
 }
 const CovidCardItem = (props: ICardItemProps) => {
   //console.log(props.cardInfo);
   const { covid, colors } = props.cardInfo;
+  const itemRef = useRef(null);
+  useEffect(() => {
+    gsap.from(itemRef.current, {
+      autoAlpha: 0,
+      ease: 'none',
+      delay: 0.2,
+      rotation: 10
+    });
+    gsap.to(itemRef.current, {
+       x: -10, duration: 1, delay: 0,
+    });
+  }, []);
+
   const cardColors = getFlagColors(colors);
   if (covid) {
     const {
@@ -23,24 +38,15 @@ const CovidCardItem = (props: ICardItemProps) => {
 
     } = covid;
 
+
     return (
 
-      <CovidInfoContent color={cardColors[1]}>
+      <CovidInfoContent color={cardColors[1]} ref={itemRef}>
         <EqualDivider style={{ color: cardColors[0] }}>
-           <EDChild color={cardColors[3] ?cardColors[3] : cardColors[2] ?cardColors[2] :cardColors[1] }
-           className="text-left"> 
-           <BiWorld size="30px" style={{ color: cardColors[0] , width: 35 }}></BiWorld>
-           {/* <span style={{ color: cardColors[0] }} className='font-weight-bold' >
-             {props.cardInfo.iso2}
-             </span> */}
-          {/* <img
-                            // w20,w40,w80,w160,w320,w640,,w1280,w2560
-                            src={"https://flagcdn.com/w40/" + props.cardInfo.iso2.toLowerCase() + `.png`}
-                            width="40"
-                            
-                            alt={country}
-                            className="card__image" />  */}
-           </EDChild>
+          <EDChild color={cardColors[3] ? cardColors[3] : cardColors[2] ? cardColors[2] : cardColors[1]}
+            className="text-left">
+            <BiWorld size="30px" style={{ color: cardColors[0], width: 35 }}></BiWorld>
+          </EDChild>
           <EDChild color={cardColors[1]} className='font-weight-bold text-center text-nowrap'>{country}</EDChild>
           <EDChild color={cardColors[0]} className='font-weight-light text-center text-nowrap'>
             <span style={{ color: cardColors[2] ? cardColors[2] : cardColors[1] }} >{continent}</span></EDChild>
@@ -59,7 +65,8 @@ const CovidCardItem = (props: ICardItemProps) => {
   else {
     let name = props.cardInfo.name;
     return (
-      <CovidInfoContent color={cardColors[1]}>
+      
+      <CovidInfoContent color={cardColors[1]} ref={itemRef}>
         <EqualDivider style={{ color: cardColors[0] }}>
           <EDChild color={cardColors[0]}>
             <BiWorld size="30px" style={{ color: cardColors[1] ? cardColors[1] : cardColors[0], width: 35 }}></BiWorld>
@@ -71,6 +78,7 @@ const CovidCardItem = (props: ICardItemProps) => {
         </EqualDivider>
         <span className="text-center" >No recent Covid-19 data</span>
       </CovidInfoContent>
+
     )
   }
 }

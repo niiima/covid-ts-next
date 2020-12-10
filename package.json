@@ -25,6 +25,7 @@
     "color-alpha": "^1.1.2",
     "cross-env": "^7.0.2",
     "form-data": "^3.0.0",
+    "gsap": "^3.5.1",
     "isomorphic-unfetch": "^2.0.0",
     "millify": "^3.3.0",
     "newsapi": "^2.4.1",

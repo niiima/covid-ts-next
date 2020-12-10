@@ -1,14 +1,14 @@
 // import {  useRef }from 'react'
 //import { useState } from 'react'
 import styled from 'styled-components'
-import {IOptionType} from '../interfaces/data.interface'
+import { IOptionType } from '../interfaces/data.interface'
 //import  getRGB  from '../utils/getRGB';
 interface Props {
     countryCode: IOptionType[];
 }
 
 const Flag = (props: Props) => {
- 
+
     const flags =
         //if (props.countryCode) {
         props.countryCode.map(code => {
@@ -17,23 +17,20 @@ const Flag = (props: Props) => {
                 <FlagContainer className="badge badge-primary"
                     key={code.value}
                     colors={code.color}
-                    // onMouseEnter={logMouseEnter}
-                    // onMouseLeave={logMouseLeave}
+                // onMouseEnter={logMouseEnter}
+                // onMouseLeave={logMouseLeave}
                 // onClick={checkCountryHasPollutionInfo}
                 >
                     {/* {!hover.isHover ? */}
                     <img
-                       
                         src={"https://flagcdn.com/w40/" + code.value.toLowerCase() + `.png`}
                         width="40"
-
                         alt={code.name} />
-
                 </FlagContainer>
             )
         })
     return (<>
-        { flags.slice().reverse()}
+        {flags.slice(0).reverse()}
     </>
     )
 }

@@ -112,7 +112,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     // },
   };
 
-  const selectedValues = props.options.filter(obj => selectedValue.includes(obj.value)).slice().reverse();
+  const selectedValues = props.options.filter(obj => selectedValue.includes(obj.value)).slice(0).reverse();
   const selectedCountries = props.data.filter(obj => selectedValue.includes(obj.iso2));
   return (
     <div>
