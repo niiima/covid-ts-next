@@ -34,7 +34,6 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     console.log(selectedValue)
     props.updateSelectedCountry(selectedValue[selectedValue.length - 1])
     setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : []);
-    //console.log(selectedValue[selectedValue.length ?  - 1])
   }
 
   const dot = (color = '#bbbbbb') => ({
@@ -113,17 +112,18 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     // },
   };
 
-
+  const selectedValues = props.options.filter(obj => selectedValue.includes(obj.value)).slice().reverse();
+  const selectedCountries = props.data.filter(obj => selectedValue.includes(obj.iso2));
   return (
     <div>
       <ul className="list-group">
         <li className="list-group-item">
-          <Flag countryCode={props.selected.iso2} />
+          <Flag countryCode={selectedValues} />
         </li>
       </ul>
       <br />
       <Select
-        value={props.options.filter(obj => selectedValue.includes(obj.value)).slice().reverse()}
+        value={selectedValues}
         //value={props.selected.iso2}
         defaultValue={props.selected.iso2}
         onChange={e => handleChange(e)}
@@ -138,7 +138,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
         menuPlacement = "top"
       />
       <br />
-      <CovidCards selected={props.selected} covidInfoList={props.data.filter(obj => selectedValue.includes(obj.iso2))}></CovidCards>
+      <CovidCards selected={props.selected} covidInfoList={selectedCountries}></CovidCards>
       <Pollution selected={props.selected.name} ></Pollution>
     </div >
   );
