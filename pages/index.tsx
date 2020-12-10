@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
 import getCountries from '../utils/fetchInitialData';
 import { IOptionType, ISuperCountryType } from '../interfaces/data.interface';
-//import { sortCountries} from '../utils/sortCountries'
+import Loading from '../components/Loading'
 //import CovidDraggableTable from '../components/CovidDraggableTable'
 
 interface IAppProps {
@@ -58,9 +58,9 @@ class Index extends React.Component<IAppProps, IAppState> {
   }
 
   componentDidMount() {
-    this.setState({
+    (()=>setTimeout(()=>this.setState({
       initiated: true
-    });
+    }),2000))();
   }
 
   render() {
@@ -74,7 +74,7 @@ class Index extends React.Component<IAppProps, IAppState> {
             }
             data={this.props.data}
           />
-        : <div> Loading... </div>} </Layout>
+        : <Loading type="balls" color="teal" />} </Layout>
     )
   }
 }
