@@ -1,5 +1,4 @@
 import React from 'react'
-import { NextPageContext } from 'next'
 import _ from 'lodash'
 import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
@@ -32,22 +31,17 @@ class Index extends React.Component<IAppProps, IAppState> {
     }
   }
 
-  // static contextType = MyContext; 
-  static async getInitialProps({ req }: NextPageContext) {
-    const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
-    console.log("Client Agent is" + userAgent)
-
-    const { data } = await getCountries();
+  static async getInitialProps() {
+        const { data } = await getCountries();
     return {
       data: data,
-      options: data.map((c) => {
-        //console.log(c.iso2)
-        if (c)
+      options: data.map((item) => {
+        if (item)
           return {
-            index: c.index,
-            value: c.iso2,
-            label: c.name,
-            color: c.colors
+            index: item.index,
+            value: item.iso2,
+            label: item.name,
+            color: item.colors
           }
       })
     };
@@ -55,62 +49,30 @@ class Index extends React.Component<IAppProps, IAppState> {
 
   updateSelectedCountry(country_code: string) {
     let selectedCovidInfo = this.state.data.find(c => c.iso2 === country_code);
+    if (!selectedCovidInfo)
+      return false;
 
-    if (!selectedCovidInfo) {
-      // this.setState({
-      //   selected: this.state.countries[0]
-      // });
-      console.log("!selectedCovidInfo")
-      return;
-    }
-    console.log(selectedCovidInfo)
-    //let listArray = [...this.state.countryList.slice()];
-    //if (selectedCovidInfoFull) {
-    //console.log("selectedCovidInfoFull Exist")
-    // this.setState({
-    //   countryList: [selectedCovidInfo, ...listArray],
-    //   selected: selectedCovidInfo ? selectedCovidInfo : this.state.selected
-    // })
-    //}
+    if (this.state.selected.iso2 === selectedCovidInfo.iso2)
+      return false;
   }
 
-  // updateSelectedCountryList(countryObject: ICountryType) {
-  //   this.setState((cs => { return { countryList: [...cs.countryList, countryObject] } }));
-  // }
-
-  // getSnapshotBeforeUpdate(prevProps, prevState) {
-  //   console.log(prevProps)
-  //   console.log(prevState)
-  // }
-
   componentDidMount() {
-    //render() will not be invoked if shouldComponentUpdate() returns false.
-    console.log("componentDidMount");
     this.setState({
       initiated: true
     });
   }
 
-
   render() {
-
     return (<Layout>
       {this.state.initiated ?
-        <div>
-          {/* <h1>Welcome to Regions</h1>
-          <p>Check random info about countries</p> */}
           <InfoPanel
             options={this.state.options}
             selected={this.state.selected}
-            updateSelectedCountry={(country: string) => {
-              if (this.state.selected.iso2 !== country)
-                this.updateSelectedCountry(country);
-            }
+            updateSelectedCountry={(country: string) =>
+              this.updateSelectedCountry(country)
             }
             data={this.props.data}
           />
-          {/* <CovidDraggableTable countries={this.props.covid}></CovidDraggableTable> */}
-        </div>
         : <div> Loading... </div>} </Layout>
     )
   }

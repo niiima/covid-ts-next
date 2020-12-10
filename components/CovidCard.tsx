@@ -10,37 +10,11 @@ export interface ICovidCardProps {
 }
 
 const CovidCards = (props: ICovidCardProps) => {
-    //console.log(props.covidInfoList)
-    // const [state, setState] = useState({
-    //     articles: props.covidInfoList.map(ci => {
-    //         return {
-    //             ...ci,
-    //             ref: createRef() /* Ref per section */
-    //         }
-    //     })
-    // });
-
-    // /* Move into parent/header */
-    // const handleNavigate = section => {
-
-    //     /* 
-    //     Access the "current element" of this sections ref. 
-    //     Treat this as the element of the div for this section.
-    //     */
-    //     let el = section.ref.current;
-
-    //     window.scrollTo({
-    //         behavior: "smooth",
-    //         left: 0,
-    //         top: el.offsetTop
-    //     });
-    // };
-
     const Panels = [] as any;
     if (props.covidInfoList.length) {
         props.covidInfoList.forEach(cardInfo => {
             if (cardInfo) {
-                Panels.push(<CovidCardItem cardInfo={cardInfo}  key={cardInfo.iso2}></CovidCardItem>)
+                Panels.push(<CovidCardItem cardInfo={cardInfo} key={cardInfo.iso2}></CovidCardItem>)
             }
         });
     }

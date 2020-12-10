@@ -2,7 +2,6 @@
 //import { useState } from 'react'
 import styled from 'styled-components'
 import { IOptionType } from '../interfaces/data.interface'
-//import  getRGB  from '../utils/getRGB';
 interface Props {
     countryCode: IOptionType[];
 }
@@ -48,31 +47,3 @@ transition : all 1s ease-in-out;
 `
 
 export default Flag;
- // w20,w40,w80,w160,w320,w640,,w1280,w2560
-   // const [hover, setHover] = useState(cs => ({ ...cs, isHover: false }));
-
-    // // const imgFlag = useCallback(()=>{
-    // //     getRGB(ref.current)
-    // //     props.setrgb()
-    // // },[]);
-    // //useEffect(() => console.log("Effect Used"))
-    // //const imgFlag = useRef<HTMLImageElement>(null);
-
-    // //useEffect()
-    // // (()=>{
-    // //     //let rgb = getRGB(imgFlag.current.getContext('2d'));
-    // //     console.log(imgFlag.current);
-    // //     //props.setrgb(rgb)
-    // // });
-
-    // function logMouseEnter() {
-    //     setHover({ isHover: true })
-    // }
-    // function logMouseLeave() {
-    //     setHover({ isHover: false });
-    // }
-    // function checkCountryHasPollutionInfo() {
-    //     console.log("checkCountryHasPollutionInfo")
-
-    //     console.log(props);
-    // }

@@ -21,7 +21,7 @@ const CovidCardItem = (props: ICardItemProps) => {
       rotation: 10
     });
     gsap.to(itemRef.current, {
-       x: -10, duration: 1, delay: 0,
+      x: -10, duration: 1, delay: 0,
     });
   }, []);
 
@@ -65,7 +65,7 @@ const CovidCardItem = (props: ICardItemProps) => {
   else {
     let name = props.cardInfo.name;
     return (
-      
+
       <CovidInfoContent color={cardColors[1]} ref={itemRef}>
         <EqualDivider style={{ color: cardColors[0] }}>
           <EDChild color={cardColors[0]}>
@@ -96,9 +96,7 @@ const CovidInfoContent = styled.article`
   list-style: none;
   transition:all 1s ease;
     .card__image{
-        // position:absolute;
-        // max-height:110px;
-        // min-height:110px;
+      
         background-position: center center;
         background-repeat: no-repeat;
         //background-size: cover;

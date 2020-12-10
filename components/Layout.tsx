@@ -2,7 +2,6 @@ import Head from 'next/head';
 import Navbar from './Navbar';
 import { createContext, Fragment } from 'react';
 import GlobalStyle from '../utils/style'
-//import Footer from '../components/footer'
 interface LayoutProps {
   title?: string;
 }
@@ -34,7 +33,6 @@ const Layout: React.FunctionComponent<LayoutProps> = (props) => (
       <div className="container">
         {props.children}
       </div>
-      {/* <Footer></Footer> */}
     </Fragment>
   </ThemeContext.Provider>
 

@@ -20,30 +20,3 @@ export const EDChild = styled.div`
   background: ${props => props.color ? props.color : "rgba(0,0,0,0.1)"};
   vertical-align: middle;
 `;
-
-// const FlexDivider = (dimension = { rows: 2, cols: 3 }) => {
-//     const { r, c } = dimension;
-//     return (
-//         <div>
-//             {Array(r).map(i => {
-//                 <EqualDivider>
-//                     {Array(c).map(j => {
-//                         <Child key={j}></Child>
-//                     })}
-//                 </EqualDivider>
-//             })}
-//             <EqualDivider>
-//                 <Child>First</Child>
-//                 <Child>Second</Child>
-//                 <Child>Third</Child>
-//             </EqualDivider>
-//             <EqualDivider vertical>
-//                 <Child>First</Child>
-//                 <Child>Second</Child>
-//                 <Child>Third</Child>
-//             </EqualDivider>
-//         </div>
-//     );
-// }
-
-//export default FlexDivider;

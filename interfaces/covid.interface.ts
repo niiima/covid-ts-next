@@ -32,7 +32,3 @@ export interface ICovidType {
     todayRecovered: number;
     updated: string;
 }
-
-// export interface ICovidTypeWithColors extends ICovidType{
-//     colors:CountryFlagColors[]
-// }

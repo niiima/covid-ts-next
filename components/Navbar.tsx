@@ -10,7 +10,7 @@ const Navbar = () => (
             <Link href="/"><a className="nav-link">Home</a></Link>
           </li>
           <li className="nav-item">
-            <Link href="/about" shallow={true}><a className="nav-link">About</a></Link>
+            {/* <Link href="/about" shallow={true}><a className="nav-link">About</a></Link> */}
           </li>
         </ul>
       </div>
