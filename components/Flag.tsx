@@ -9,28 +9,22 @@ interface Props {
 const Flag = (props: Props) => {
 
     const flags =
-        //if (props.countryCode) {
         props.countryCode.map(code => {
-            console.log(code)
             return (
                 <FlagContainer className="badge badge-primary"
                     key={code.value}
-                    colors={code.color}
-                // onMouseEnter={logMouseEnter}
-                // onMouseLeave={logMouseLeave}
-                // onClick={checkCountryHasPollutionInfo}
-                >
-                    {/* {!hover.isHover ? */}
+                    colors={code.color} >
                     <img
                         src={"https://flagcdn.com/w40/" + code.value.toLowerCase() + `.png`}
                         width="40"
                         alt={code.name} />
                 </FlagContainer>
             )
-        })
-    return (<>
-        {flags.slice(0).reverse()}
-    </>
+        });
+    return (
+        <>
+            {flags.slice().reverse()}
+        </>
     )
 }
 

@@ -1,11 +1,12 @@
+
+import { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { BiWorld } from 'react-icons/bi'
 import millify from 'millify';
+import gsap from 'gsap';
 import { getFlagColors } from '../utils/getFlagColors';
 import { EqualDivider, EDChild } from '../components/FlexDevider';
 import { ISuperCountryType } from '../interfaces/data.interface';
-import gsap from 'gsap';
-import { useRef, useEffect } from 'react'
 interface ICardItemProps {
   cardInfo: ISuperCountryType
 }
@@ -19,16 +20,21 @@ const CovidCardItem = (props: ICardItemProps) => {
       ease: 'none',
       delay: 0.1,
       rotation: 0,
-      //backgroundColor: "transparent",
       x: -20,
-      duration: 2
+      duration: 1,
+
     });
-    // gsap.to(itemRef.current, {
-    //   x: -10,
-    //   duration: 1,
-    //   delay: 0,
-    //   backgroundColor: props.cardInfo.colors[0].color,
-    // });
+    gsap.to(itemRef.current, {
+      //y: 10,
+      duration: 2,
+      delay: 1,
+      backgroundColor: props.cardInfo.colors[0].color,
+      borderWidth: 5,
+      borderColor: colors[0].color,
+      border: "solid",
+      borderTopLeftRadius: 30,
+      borderBottomRightRadius: 30
+    });
   }, []);
 
   const cardColors = getFlagColors(colors);
@@ -45,7 +51,7 @@ const CovidCardItem = (props: ICardItemProps) => {
 
     return (
 
-      <CovidInfoContent color={cardColors[1]} ref={itemRef}>
+      <CovidInfoContent color={cardColors[0]} hoverColor={cardColors[1]} ref={itemRef}>
         <EqualDivider style={{ color: cardColors[0] }}>
           <EDChild color={cardColors[3] ? cardColors[3] : cardColors[2] ? cardColors[2] : cardColors[1]}
             className="text-left">
@@ -75,12 +81,11 @@ const CovidCardItem = (props: ICardItemProps) => {
           <EDChild color={cardColors[0]}>
             <BiWorld size="30px" style={{ color: cardColors[1] ? cardColors[1] : cardColors[0], width: 35 }}></BiWorld>
           </EDChild>
-
           <EDChild color={cardColors[1]} className='font-weight-bold'>
             {name}
           </EDChild>
         </EqualDivider>
-        <span className="text-center" >No recent Covid-19 data</span>
+        <span className="text-center">No Covid-19 report</span>
       </CovidInfoContent>
 
     )
@@ -99,6 +104,7 @@ const CovidInfoContent = styled.article`
   text-decoration: none;
   list-style: none;
   transition:all 1s ease;
+
     .card__image{
       
         background-position: center center;
@@ -124,7 +130,8 @@ const CovidInfoContent = styled.article`
       }
 
        &:hover{
-            background-color:${props => props.color ? props.color : "rgba(0,0,0,0.1)"};
+        border-color:${props => props.hoverColor ? props.hoverColor : "#fff"};
+            background-color:transparent;//${props => props.color ? props.color : "rgba(0,0,0,0.1)"};
             border-color: #444;
     }
 `

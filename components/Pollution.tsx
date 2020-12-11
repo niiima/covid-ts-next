@@ -1,10 +1,10 @@
 function Pollution(props) {
     let currentCountry = props.selected;
-    
+    console.log(currentCountry)
     return (
         <footer className="footer-bs">
             <div className="row">
-                <div className="col-md-3 footer-brand animated fadeInLeft hidden">{currentCountry}</div>
+                {/* <div className="col-md-3 footer-brand animated fadeInLeft hidden">{currentCountry}</div> */}
             </div>
         </footer>
     )

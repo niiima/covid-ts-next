@@ -8,7 +8,7 @@ interface LayoutProps {
 
 const themes = {
   light: {
-    foreground: "#000000",
+    foreground: "#222222",
     background: "#eeeeee"
   },
   dark: {
@@ -35,7 +35,6 @@ const Layout: React.FunctionComponent<LayoutProps> = (props) => (
       </div>
     </Fragment>
   </ThemeContext.Provider>
-
 );
 
 export default Layout;

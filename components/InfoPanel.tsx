@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import Flag from './Flag';
-import { ICountryType } from '../interfaces/country.interface';
-// import { ICovidType } from '../interfaces/covid.interface';
 import { ISuperCountryType,IOptionType } from '../interfaces/data.interface';
 import {getColor} from '../utils/getFlagColors';
 import Pollution from './Pollution';
@@ -12,24 +10,26 @@ import makeAnimated from 'react-select/animated';
 import alpha from 'color-alpha'
 //import styled from 'styled-components'
 interface IInfoPanelProps {
-  selected: ICountryType;
-
+  selected: ISuperCountryType;
   updateSelectedCountry: (country_code: string) => void;
   options: IOptionType[]
   data: ISuperCountryType[];
+  initiated:boolean
 }
 
 const animatedComponents = makeAnimated();
 
 const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
-  const [selectedValue, setSelectedValue] = useState([]) as any;
+  const [selectedValue, setSelectedValue] = useState([props.selected.iso2]) as any;
 
   // handle onChange event of the Select passed to it's child component
   const handleChange = (e) => {
-    console.log(e)
-    console.log(selectedValue)
-    props.updateSelectedCountry(selectedValue[selectedValue.length - 1])
-    setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : []);
+    setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : [props.selected.iso2]);
+      console.log(e)
+      //console.log(e[e.length - 1])
+    //props.updateSelectedCountry([...e][e.length-1].iso2)//
+    if(e.length)
+    props.updateSelectedCountry(e[e.length - 1].value)
   }
 
   const dot = (color = '#bbbbbb') => ({
@@ -104,6 +104,8 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
 
   const selectedValues = [...props.options.filter(obj => selectedValue.includes(obj.value))].slice(0).reverse();
   const selectedCountries = props.data.filter(obj => selectedValue.includes(obj.iso2));
+  // if(!props.initiated)
+  //   handleChange([props.selected])
   return (
     <div>
       <ul className="list-group">

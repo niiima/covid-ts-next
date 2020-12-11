@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 //import { useState, createRef } from 'react';
 import { ICountryType } from "../interfaces/country.interface";
-//import { ICovidTypeWithColors } from "../interfaces/covid.interface";
 import { ISuperCountryType } from "../interfaces/data.interface";
 import CovidCardItem from './CovidCardItem'
 export interface ICovidCardProps {
@@ -20,7 +19,7 @@ const CovidCards = (props: ICovidCardProps) => {
     }
     return (
         <CardsSection>
-            {Panels.length ? Panels.slice(0).reverse() : (<p className="no-content" >No data about {props.selected.name}</p>)}
+            {Panels.length ? Panels.slice(0).reverse() : (<p className="no-content" >Select a country</p>)}
         </CardsSection>)
 }
 
