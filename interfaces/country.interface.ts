@@ -1,11 +1,15 @@
-export type ICountryType = {
+export interface ICountryType  {
     id: string;
     iso2: string;
     name: string;
     colors:IFlagColorType[];
 }
 
-export type IFlagColorType = {
+export interface IFlagColorType  {
     color: string;
     percentage: number;
+}
+
+export interface IColorProp {
+    [key:string] : IFlagColorType[]
 }

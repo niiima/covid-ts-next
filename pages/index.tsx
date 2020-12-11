@@ -16,7 +16,7 @@ interface IAppState {
   data: ISuperCountryType[];
   initiated: boolean;
   selected: ISuperCountryType;
-  countryList: ISuperCountryType[];
+  selectedCountries: ISuperCountryType[];
   options: IOptionType[];
 }
 
@@ -27,16 +27,16 @@ class Index extends React.Component<IAppProps, IAppState> {
       ...props,
       initiated: false,
       selected: props.data.find(c => c.iso2 === "IR"),
-      countryList: [],
+      selectedCountries: [],
       options: props.options
     }
   }
 
   static async getInitialProps() {
-        const { data } = await getCountries();
+    const { data } = await getCountries();
     return {
       data: data,
-      options: data.map((item,index) => {
+      options: data.map((item, index) => {
         if (item)
           return {
             index: index,
@@ -58,22 +58,23 @@ class Index extends React.Component<IAppProps, IAppState> {
   }
 
   componentDidMount() {
-    (()=>setTimeout(()=>this.setState({
+    (() => setTimeout(() => this.setState({
       initiated: true
-    }),2000))();
+    }), 2000))();
   }
 
   render() {
+    console.log(this.state)
     return (<Layout>
       {this.state.initiated ?
-          <InfoPanel
-            options={this.state.options}
-            selected={this.state.selected}
-            updateSelectedCountry={(country: string) =>
-              this.updateSelectedCountry(country)
-            }
-            data={this.props.data}
-          />
+        <InfoPanel
+          options={this.state.options}
+          selected={this.state.selected}
+          updateSelectedCountry={(country: string) =>
+            this.updateSelectedCountry(country)
+          }
+          data={this.props.data}
+        />
         : <Loading type="balls" color="teal" />} </Layout>
     )
   }

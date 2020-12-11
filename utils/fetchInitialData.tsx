@@ -1,10 +1,10 @@
 import fetch from 'isomorphic-unfetch';
 import { v4 as uuidv4 } from 'uuid';
 import { compareValues } from './sortCountries'
-import { ICountryType, IFlagColorType } from '../interfaces/country.interface';
+import { ICountryType, IFlagColorType,IColorProp } from '../interfaces/country.interface';
 
-const countryList: ICountryType[] = require('../public/country-list.json');
-const flagData = require('../public/flag_data.json');
+const selectedCountries :ICountryType[] = require('../public/country-list.json');
+const flagData:IColorProp[][] = require('../public/flag_data.json');
 const emptyColorList: IFlagColorType[] = [{ color: "#fff", percentage: 50 }, { color: "#999", percentage: 50 }];
 
 const getCountries = async () => {
@@ -12,22 +12,28 @@ const getCountries = async () => {
         return response.json()
     }).then(data => data).catch(err => console.log(err));
 
-    const colors: IFlagColorType[] = Object.values(flagData);
-    //const countryKeys = Object.keys(flagData);
+    const colors: IColorProp[][] = [];
+    Array.from(Object.values(flagData)).forEach(color => {
+        console.log(typeof color)
+        if (color)
+            colors.push(color.sort((a:any,b:any) => b.percentage - a.percentage));
+    });
+
     const list = Object.keys(flagData).map((c, i) => {
-        const row = countryList.find(country => {
+        const row = selectedCountries.find(country => {
             if (country.iso2 === c.toUpperCase())
                 return {
                     ...country,
                 }
         });
+
         return row ? {
             ...row,
             id: uuidv4(),
             colors: colors[i]
         } :
             {
-                ...countryList[i],
+                ...selectedCountries[i],
                 id: uuidv4(),
                 colors: emptyColorList.slice()
             }
@@ -51,6 +57,12 @@ const getCountries = async () => {
     })();
 
     const data = await DATUM;
+    var valueArr = data.map(function(item){ return item?.iso2 });
+    var isDuplicate = valueArr.some(function(item, idx){ 
+        return valueArr.indexOf(item) != idx 
+    });
+    console.log(isDuplicate);
+
     return {
         data: data.slice().sort(compareValues('name', 'asc'))
     };

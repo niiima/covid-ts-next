@@ -11,7 +11,7 @@ export const getFlagColors = (colors: IFlagColorType[]) => {
 }
 
 export const getColor = (list: IFlagColorType[], key: number, a = 1, isWhiteOk: boolean = true) => {
-    const sortedList = list;//sortColors(list);
+    const sortedList = list;
 
     let color = findColor(sortedList, key)
     //console.log(a)
