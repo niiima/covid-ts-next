@@ -25,9 +25,9 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
   const handleChange = (e) => {
     setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : [props.selected.iso2]);
     if (e)
-      props.updateSelectedCountry(e[e.length - 1].value);
-    else
-        props.updateSelectedCountry("");
+      if (e.length !== 0)
+        if (e[e.length - 1].hasOwnProperty("value"))
+          props.updateSelectedCountry(e[e.length - 1].value);
   }
 
   const dot = (color = '#bbbbbb') => ({
