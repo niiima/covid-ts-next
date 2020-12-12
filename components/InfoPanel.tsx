@@ -24,8 +24,10 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
   // handle onChange event of the Select passed to it's child component
   const handleChange = (e) => {
     setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : [props.selected.iso2]);
-    if (e.length)
+    if (e)
       props.updateSelectedCountry(e[e.length - 1].value);
+    else
+        props.updateSelectedCountry("");
   }
 
   const dot = (color = '#bbbbbb') => ({
@@ -100,7 +102,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
 
   const selectedValues = props.options.filter(obj => selectedValue.includes(obj.value));
   const selectedCountries = props.data.filter(obj => selectedValue.includes(obj.iso2));
-  
+
   return (
     <div>
       <ul className="list-group">

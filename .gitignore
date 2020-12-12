@@ -3,3 +3,5 @@ node_modules
 /.expo
 .env
 /.idea
+/public/sw.js
+/public/workbox-*.js

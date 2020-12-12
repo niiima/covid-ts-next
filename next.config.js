@@ -1,12 +1,19 @@
-// next.config.js
-//const withTypescript = require('@zeit/next-typescript')
-//module.exports = withTypescript()
+const isProd = process.env.NODE_ENV === "production";
+
+const withPWA = require("next-pwa")
+
+const withMDX = require("@next/mdx")({
+  extension: /\.mdx?$/
+});
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
   })
 
-  const nextConfig = {
-    // any configs you need
+module.exports = withBundleAnalyzer(withMDX(withPWA({
+  pageExtensions: ["tsx", "mdx"],
+  pwa: {
+    disable: !isProd,
+    dest: "public"
   }
-  
-  module.exports = withBundleAnalyzer(nextConfig)
+})))
