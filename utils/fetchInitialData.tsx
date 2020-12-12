@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-unfetch';
+//import fetch from 'isomorphic-unfetch';
 //import { v4 as uuidv4 } from 'uuid';
 import { compareValues } from './sortCountries'
 import { ICountryType, IFlagColorType,IColorProp } from '../interfaces/country.interface';
