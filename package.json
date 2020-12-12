@@ -1,5 +1,5 @@
 {
-  "name": "bitzprice",
+  "name": "covidshowcase",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -29,7 +29,7 @@
     "isomorphic-unfetch": "^2.0.0",
     "millify": "^3.3.0",
     "newsapi": "^2.4.1",
-    "next": "^9.1.6",
+    "next": "^10.0.3",
     "querystring": "^0.2.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

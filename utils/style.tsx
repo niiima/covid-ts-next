@@ -8,7 +8,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Saira Condensed','Open-Sans', Helvetica, Sans-Serif;
   }
 
-
 .select-menu-outer{top: auto; bottom: 100%}
 .drop-up .Select-menu-outer {
 top: auto;

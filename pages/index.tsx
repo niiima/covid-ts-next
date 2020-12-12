@@ -4,13 +4,12 @@ import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
 import getCountries from '../utils/fetchInitialData';
 import { IOptionType, ISuperCountryType } from '../interfaces/data.interface';
-//import Loading from '../components/Loading'
 import Skeleton from 'react-loading-skeleton'
 
 interface IAppProps {
   data: ISuperCountryType[];
   options: IOptionType[];
-  clientLocation:string;
+  clientLocation: string;
 }
 
 interface IAppState {
@@ -18,7 +17,6 @@ interface IAppState {
   options: IOptionType[];
   initiated: boolean;
   selected: ISuperCountryType;
-  //selectedCountries: ISuperCountryType[];
 }
 
 class Index extends React.Component<IAppProps, IAppState> {
@@ -28,16 +26,20 @@ class Index extends React.Component<IAppProps, IAppState> {
       ...props,
       initiated: false,
       selected: { ...props.data.find(c => c.iso2 === props.clientLocation.toUpperCase()) },
-      //selectedCountries: [],
       options: props.options
     }
   }
 
   static async getInitialProps() {
-    console.log(process.env.API_KEY)
-    let location = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.NEXT_PUBLIC_API_KEY}`)
-    .then(r=>r.json()).catch(err=>console.log(err))
-    //console.log(location)
+
+    let location = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.NEXT_PUBLIC_GEOIP_API_KEY}`)
+      .then(r => {
+        if (r.ok)
+          return r.json();
+        else
+          return { country_code2: 'ir' }; // Return default country
+      }).catch(err => console.log(err))
+
     const { data } = await getCountries();
     return {
       data: data,
@@ -50,34 +52,31 @@ class Index extends React.Component<IAppProps, IAppState> {
             color: item.colors
           }
       }),
-      clientLocation:location.country_code2
+      clientLocation: location.country_code2
     };
   }
 
-  updateSelectedCountry(country_code: string = "IR") {
-    console.log(country_code)
-    if(country_code === this.state.selected.iso2)
+  updateSelectedCountry(country_code: string) {
+    if (country_code === this.state.selected.iso2)
       return false
     let selectedCovidInfo = this.state.data.find(c => c.iso2 === country_code);
-    console.log(selectedCovidInfo)
     if (selectedCovidInfo) {
       this.setState({ selected: selectedCovidInfo })
-       }
-      if (!selectedCovidInfo) {
-        return false;
-      }
     }
-
-    componentDidMount() {
-      // if (this.props.data.length)
-      setTimeout(() => this.setState({
-        initiated: true,
-      }), 2000);
+    if (!selectedCovidInfo) {
+      return false;
     }
+  }
 
-    render() {
-      console.log("render")
-      return (<Layout>
+  componentDidMount() {
+    setTimeout(() => this.setState({
+      initiated: true,
+    }), 2000);
+  }
+
+  render() {
+    return (
+      <Layout>
         {this.state.initiated ?
           <InfoPanel
             options={this.state.options}
@@ -95,10 +94,9 @@ class Index extends React.Component<IAppProps, IAppState> {
             <hr />
             <Skeleton style={{ fontSize: 20, lineHeight: 9, backgroundColor: "transparent", border: "4px solid white", opacity: 0.7 }} />
           </>}
-        {/* <Loading type="balls" color="teal" />} */}
       </Layout>
-      )
-    }
+    )
   }
+}
 
-  export default Index;
+export default Index;
