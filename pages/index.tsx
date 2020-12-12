@@ -10,6 +10,7 @@ import Skeleton from 'react-loading-skeleton'
 interface IAppProps {
   data: ISuperCountryType[];
   options: IOptionType[];
+  clientLocation:string;
 }
 
 interface IAppState {
@@ -26,13 +27,17 @@ class Index extends React.Component<IAppProps, IAppState> {
     this.state = {
       ...props,
       initiated: false,
-      selected: { ...props.data.find(c => c.iso2 === "IR") },
+      selected: { ...props.data.find(c => c.iso2 === props.clientLocation.toUpperCase()) },
       //selectedCountries: [],
       options: props.options
     }
   }
 
   static async getInitialProps() {
+    console.log(process.env.API_KEY)
+    let location = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.NEXT_PUBLIC_API_KEY}`)
+    .then(r=>r.json()).catch(err=>console.log(err))
+    //console.log(location)
     const { data } = await getCountries();
     return {
       data: data,
@@ -44,7 +49,8 @@ class Index extends React.Component<IAppProps, IAppState> {
             label: item.name,
             color: item.colors
           }
-      })
+      }),
+      clientLocation:location.country_code2
     };
   }
 

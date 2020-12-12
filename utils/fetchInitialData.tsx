@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-unfetch';
-import { v4 as uuidv4 } from 'uuid';
+//import { v4 as uuidv4 } from 'uuid';
 import { compareValues } from './sortCountries'
 import { ICountryType, IFlagColorType,IColorProp } from '../interfaces/country.interface';
 
@@ -29,12 +29,12 @@ const getCountries = async () => {
 
         return row ? {
             ...row,
-            id: uuidv4(),
+            //id: uuidv4(),
             colors: colors[i]
         } :
             {
                 ...countries[i],
-                id: uuidv4(),
+                //id: uuidv4(),
                 colors: emptyColorList.slice()
             }
     }
