@@ -2,24 +2,9 @@ import React from 'react'
 import _ from 'lodash'
 import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
-import getCountries from '../utils/fetchInitialData';
-import { IOptionType, ISuperCountryType } from '../interfaces/data.interface';
-import { ICovidSummary } from '../interfaces/covid.interface'
+import getAppData from '../utils/fetchInitialData';
+import { IAppState, IAppProps } from '../interfaces/app.interface';
 import IndexSkeleton from '../components/IndexSkeleton';
-
-interface IAppProps {
-  data: ISuperCountryType[];
-  options: IOptionType[];
-  clientLocation: string;
-  totalInfo: ICovidSummary;
-}
-
-interface IAppState {
-  data: ISuperCountryType[];
-  options: IOptionType[];
-  initiated: boolean;
-  selected: ISuperCountryType;
-}
 
 class Index extends React.Component<IAppProps, IAppState> {
   constructor(props) {
@@ -28,46 +13,27 @@ class Index extends React.Component<IAppProps, IAppState> {
       ...props,
       initiated: false,
       selected: { ...props.data.find(c => c.iso2 === props.clientLocation.toUpperCase()) },
-      options: props.options
     }
   }
 
   static async getInitialProps() {
-    let location = await fetch(`http://ip-api.com/json`)
-      .then(r => {
-        if (r.ok)
-          return r.json();
-        else
-          return { countryCode: 'IR' }; // Return default country on fail to detect ip
-      }).catch(err => console.log(err))//.then(data=>console.log(data));
-
-    const total = await fetch('https://api.covid19api.com/world/total').then(r => {
-        return r.json();
-    }).catch(err => console.log(err));
-
-    const { data } = await getCountries();
+    const { data, location, total, options } = await getAppData();
     return {
       data: data,
-      options: data.map((item, index) => {
-        if (item)
-          return {
-            index: index,
-            value: item.iso2,
-            label: item.name,
-            color: item.colors
-          }
-      }),
-      clientLocation: location.countryCode,
+      options: options,
+      clientLocation: location,
       totalInfo: total
     };
   }
 
   updateSelectedCountry(country_code: string) {
     if (country_code === this.state.selected.iso2)
-      return false
+      return false;
+
     let selectedCovidInfo = this.state.data.find(c => c.iso2 === country_code);
     if (selectedCovidInfo) {
       this.setState({ selected: selectedCovidInfo })
+      return true;
     }
     if (!selectedCovidInfo) {
       return false;

@@ -1,4 +1,4 @@
-import {HiOutlineUserRemove} from 'react-icons/hi' 
+import { HiOutlineUserRemove } from 'react-icons/hi';
 const CovidSummary = (props) => {
     const { TotalConfirmed,
         TotalDeaths,
@@ -16,7 +16,7 @@ const CovidSummary = (props) => {
                                     <div className="row no-gutters align-items-center">
                                         <div className="col-auto">
                                             <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{TotalConfirmed}</div>
-                                            <HiOutlineUserRemove className="h5 mb-0 mr-3 font-weight-bold text-gray-800" color={"red"}></HiOutlineUserRemove>
+                                            
                                         </div>
 
                                     </div>
@@ -36,7 +36,7 @@ const CovidSummary = (props) => {
                                     <div className="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Death</div>
                                     <div className="row no-gutters align-items-center">
                                         <div className="col-auto">
-                                            <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{TotalDeaths}</div>
+                                            <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{TotalDeaths}<HiOutlineUserRemove  color={"red"}></HiOutlineUserRemove></div>
                                         </div>
 
                                     </div>

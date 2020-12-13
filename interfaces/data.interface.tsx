@@ -1,11 +1,11 @@
-import { IFlagColorType,ICountryType } from './country.interface'
-import {ICovidType} from  './covid.interface';
+import { IFlagColorType, ICountryType } from './country.interface'
+import { ICovidType } from './covid.interface';
 export interface IOptionType {
-    index:number;
+    index: number;
     value: string;
     name: string;
     color: IFlagColorType[]
 }
 export interface ISuperCountryType extends ICountryType {
-    covid:ICovidType
+    covid: ICovidType
 }
