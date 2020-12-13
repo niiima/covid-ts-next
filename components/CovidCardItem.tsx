@@ -7,16 +7,17 @@ import gsap from 'gsap';
 import { getFlagColors } from '../utils/getFlagColors';
 import { EqualDivider, EDChild } from '../components/FlexDevider';
 import { ISuperCountryType } from '../interfaces/data.interface';
-//import { Draggable } from 'gsap/all';
+import WithDraggable from '../components/WithDraggable';
 interface ICardItemProps {
   cardInfo: ISuperCountryType
 }
+
 const CovidCardItem = (props: ICardItemProps) => {
   //console.log(props.cardInfo);
   const { covid, colors } = props.cardInfo;
   const itemRef = useRef(null);
+
   useEffect(() => {
-    //Draggable.create(itemRef.current,{});
     gsap.from(itemRef.current, {
       autoAlpha: 0,
       ease: 'none',
@@ -52,42 +53,45 @@ const CovidCardItem = (props: ICardItemProps) => {
     } = covid;
 
     return (
-      <CovidInfoContent color={cardColors[0]} hoverColor={cardColors[1]} ref={itemRef}>
-        <EqualDivider style={{ color: cardColors[0] }}>
-          <EDChild color={cardColors[3] ? cardColors[3] : cardColors[2] ? cardColors[2] : cardColors[1]}
-            className="text-left">
-            <BiWorld size="30px" style={{ color: cardColors[0], width: 35 }}></BiWorld>
-          </EDChild>
-          <EDChild color={cardColors[1]} className='font-weight-bold text-center text-nowrap'>{country}</EDChild>
-          <EDChild color={cardColors[0]} className='font-weight-light text-center text-nowrap'>
-            <span style={{ color: cardColors[2] ? cardColors[2] : cardColors[1] }} >{continent}</span></EDChild>
-        </EqualDivider>
-        <EqualDivider vertical={true}>
-          <EDChild><Info>Deaths per each million: {deathsPerOneMillion}</Info></EDChild>
-          <EDChild><Info color={cardColors} colorIndex={2}>Total population {millify(population)}</Info></EDChild>
-          <EDChild><Info color={"brown"}>Cases: {millify(todayCases)}</Info></EDChild>
-          <EDChild><Info color={"green"}>Recovered: {millify(todayRecovered)}</Info></EDChild>
-          <EDChild><Info color={"red"}>Deaths:{millify(todayDeaths)}</Info></EDChild>
-        </EqualDivider>
-      </CovidInfoContent>
+      <WithDraggable>
+        <CovidInfoContent color={cardColors[0]} hoverColor={cardColors[1]} ref={itemRef}>
+          <EqualDivider style={{ color: cardColors[0] }}>
+            <EDChild color={cardColors[3] ? cardColors[3] : cardColors[2] ? cardColors[2] : cardColors[1]}
+              className="text-left">
+              <BiWorld size="30px" style={{ color: cardColors[0], width: 35 }}></BiWorld>
+            </EDChild>
+            <EDChild color={cardColors[1]} className='font-weight-bold text-center text-nowrap'>{country}</EDChild>
+            <EDChild color={cardColors[0]} className='font-weight-light text-center text-nowrap'>
+              <span style={{ color: cardColors[2] ? cardColors[2] : cardColors[1] }} >{continent}</span></EDChild>
+          </EqualDivider>
+          <EqualDivider vertical={true}>
+            <EDChild><Info>Deaths per each million: {deathsPerOneMillion}</Info></EDChild>
+            <EDChild><Info color={cardColors} colorIndex={2}>Total population {millify(population)}</Info></EDChild>
+            <EDChild><Info color={"brown"}>Cases: {millify(todayCases)}</Info></EDChild>
+            <EDChild><Info color={"green"}>Recovered: {millify(todayRecovered)}</Info></EDChild>
+            <EDChild><Info color={"red"}>Deaths:{millify(todayDeaths)}</Info></EDChild>
+          </EqualDivider>
+        </CovidInfoContent>
+
+      </WithDraggable>
     )
   }
   else {
     let name = props.cardInfo.name;
     return (
-
-      <CovidInfoContent color={cardColors[1]} ref={itemRef}>
-        <EqualDivider style={{ color: cardColors[0] }}>
-          <EDChild color={cardColors[0]}>
-            <BiWorld size="30px" style={{ color: cardColors[1] ? cardColors[1] : cardColors[0], width: 35 }}></BiWorld>
-          </EDChild>
-          <EDChild color={cardColors[1]} className='font-weight-bold'>
-            {name}
-          </EDChild>
-        </EqualDivider>
-        <span className="text-center">No Covid-19 report</span>
-      </CovidInfoContent>
-
+      <WithDraggable>
+        <CovidInfoContent color={cardColors[1]} ref={itemRef}>
+          <EqualDivider style={{ color: cardColors[0] }}>
+            <EDChild color={cardColors[0]}>
+              <BiWorld size="30px" style={{ color: cardColors[1] ? cardColors[1] : cardColors[0], width: 35 }}></BiWorld>
+            </EDChild>
+            <EDChild color={cardColors[1]} className='font-weight-bold'>
+              {name}
+            </EDChild>
+          </EqualDivider>
+          <span className="text-center">No Covid-19 report</span>
+        </CovidInfoContent>
+      </WithDraggable>
     )
   }
 }

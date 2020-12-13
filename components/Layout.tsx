@@ -19,8 +19,9 @@ const themes = {
 
 const ThemeContext = createContext(themes.light);
 
-const Layout: React.FunctionComponent<LayoutProps> = (props) => (
-  <ThemeContext.Provider value={themes.dark}>
+const Layout: React.FunctionComponent<LayoutProps> = (props) => {
+  console.log(props.children ? props.children["props"] : null)
+  return (<ThemeContext.Provider value={themes.dark}>
     <Head>
       <title>Countries</title>
       <meta charSet="utf-8" />
@@ -35,6 +36,6 @@ const Layout: React.FunctionComponent<LayoutProps> = (props) => (
       </div>
     </Fragment>
   </ThemeContext.Provider>
-);
-
+  );
+}
 export default Layout;
