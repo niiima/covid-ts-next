@@ -5,6 +5,7 @@ import InfoPanel from '../components/InfoPanel';
 import getAppData from '../utils/fetchInitialData';
 import { IAppState, IAppProps } from '../interfaces/app.interface';
 import IndexSkeleton from '../components/IndexSkeleton';
+//import useAsync from '../hooks/useAsync';
 
 class Index extends React.Component<IAppProps, IAppState> {
   constructor(props) {
@@ -47,6 +48,13 @@ class Index extends React.Component<IAppProps, IAppState> {
   }
 
   render() {
+    //   const {
+    //     //execute, 
+    //     status,
+    //     //value, 
+    //     error
+    //   } = useAsync<string>(customDelayOnLoad, false);
+
     return (
       <Layout>
         {this.state.initiated ?
@@ -68,3 +76,9 @@ class Index extends React.Component<IAppProps, IAppState> {
 }
 
 export default Index;
+
+const customDelayOnLoad = (): Promise<string> => new Promise((resolve, reject) => {
+  setTimeout(() => {
+    return true ? resolve('ok') : reject('no');
+  }, 2000);
+});

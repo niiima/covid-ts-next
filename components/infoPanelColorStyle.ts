@@ -1,4 +1,4 @@
-import { getColor } from '../utils/getFlagColors';
+import { getColor } from '../utils/color.util';
 import alpha from 'color-alpha'
 export const selectColorStyles = {
     control: styles => ({ ...styles, backgroundColor: '#999' }),
@@ -23,7 +23,6 @@ export const selectColorStyles = {
                 backgroundColor: !isDisabled || (isSelected ? data.color[1] ? data.color[1].color : data.color[0].color : "white")//alpha(data.color[1].color,1.2))//.alpha(0.3).css()),
             },
         };
-
     },
     multiValue: (styles, { data }) => ({
         ...styles,

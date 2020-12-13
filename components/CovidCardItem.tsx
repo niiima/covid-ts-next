@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { BiWorld } from 'react-icons/bi'
 import millify from 'millify';
 import gsap from 'gsap';
-import { getFlagColors } from '../utils/getFlagColors';
+import { getFlagColors } from '../utils/color.util';
 import { EqualDivider, EDChild } from '../components/FlexDevider';
 import { ISuperCountryType } from '../interfaces/data.interface';
 import WithDraggable from '../components/WithDraggable';
