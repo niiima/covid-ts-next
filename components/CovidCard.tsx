@@ -5,7 +5,7 @@ import { ISuperCountryType } from "../interfaces/data.interface";
 import CovidCardItem from './CovidCardItem'
 export interface ICovidCardProps {
     covidInfoList: ISuperCountryType[];
-    selected: ICountryType;
+    selected?: ICountryType;
 }
 
 const CovidCards = (props: ICovidCardProps) => {

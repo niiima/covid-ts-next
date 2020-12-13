@@ -1,18 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 // Accept an async function return multiple status strings
 // idle, success, error, pending
-// const myFunction = (): Promise<string> => {
-//   return new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//       const rnd = Math.random() * 10;
-//       rnd <= 5
-//         ? resolve('Submitted successfully 🙌')
-//         : reject('Oh no there was an error 😞');
-//     }, 2000);
-//   });
-// };
-  
 const useAsync = <T, E = string>(
   asyncFunction: () => Promise<T>,
   immediate = true

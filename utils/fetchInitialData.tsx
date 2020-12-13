@@ -1,22 +1,22 @@
-//import fetch from 'isomorphic-unfetch';
-//import { v4 as uuidv4 } from 'uuid';
 import { compareValues } from './sortCountries'
-import { ICountryType, IFlagColorType, IColorProp } from '../interfaces/country.interface';
-
+import { ICountryType, IFlagColorType } from '../interfaces/country.interface';
+import { ICovidType } from '../interfaces/covid.interface';
 const countries: ICountryType[] = require('../public/country-list.json');
-const flagData: IColorProp[][] = require('../public/flag_data.json');
-const emptyColorList: IFlagColorType[] = [{ color: "#fff", percentage: 50 }, { color: "#999", percentage: 50 }];
-
+const flagData: IFlagColorType[][] = require('../public/flag_data.json');
+import { emptyColorList, sampleTotalInfo, sampleData,ISuperCountryType } from '../interfaces/data.interface'
 const getAppData = async () => {
-    const covidDataPromise = fetch("https://corona.lmao.ninja/v2/countries?yesterday=&sort=").then(response => {
-        return response.json()
+    const covidDataPromise: Promise<ICovidType[]> = await fetch("https://corona.lmao.ninja/v2/countries?yesterday=&sort=").then(response => {
+        if (response.ok)
+            return response.json()
+        else
+            return {...sampleData.covid}
     }).then(data => data).catch(err => console.log(err));
 
-    const colors: IColorProp[][] = [];
+    const colors: IFlagColorType[][] = [];
     Array.from(Object.values(flagData)).forEach(color => {
         //console.log(typeof color)
         if (color)
-            colors.push(color.sort((a: any, b: any) => b.percentage - a.percentage));
+            colors.push(color.sort((a: IFlagColorType, b: IFlagColorType) => b.percentage - a.percentage));
     });
 
     const list = Object.keys(flagData).map((c, i) => {
@@ -48,9 +48,10 @@ const getAppData = async () => {
                     if (info.countryInfo.iso2 === country.iso2)
                         return info
                 });
+                //if (covidInfo)
                 return {
                     ...country,
-                    covid: covidInfo ? covidInfo : null
+                    covid: covidInfo
                 }
             }
         })
@@ -72,23 +73,27 @@ const getAppData = async () => {
         }).catch(err => console.log(err))//.then(data=>console.log(data));
 
     const total = await fetch('https://api.covid19api.com/world/total').then(r => {
-        return r.json();
+        if (r.ok)
+            return r.json();
+        else return sampleTotalInfo;
     }).catch(err => console.log(err));
 
     return {
-        data: data.slice().sort(compareValues('name', 'asc')),
-        location: location.countryCode,
+        data: data ? data.slice().sort(compareValues('name', 'asc')) : null,// sampleData,
+        location: location.countryCode.toUpperCase(),
         total: total,
-        options: data.map((item, index) => {
-            if (item)
-                return {
-                    index: index,
-                    value: item.iso2,
-                    label: item.name,
-                    color: item.colors
-                }
-        })
+        options: data ? data.map(getOption) : null, //sampleData.map(getOption)
     };
+}
+
+function getOption(item, index) {
+    if (item)
+        return {
+            index: index,
+            value: item.iso2,
+            label: item.name,
+            color: item.colors
+        }
 }
 
 export default getAppData;

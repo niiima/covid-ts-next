@@ -20,7 +20,7 @@ const themes = {
 const ThemeContext = createContext(themes.light);
 
 const Layout: React.FunctionComponent<LayoutProps> = (props) => {
-  console.log(props.children ? props.children["props"] : null)
+  //console.log(props.children ? props.children["props"] : null)
   return (<ThemeContext.Provider value={themes.dark}>
     <Head>
       <title>Countries</title>

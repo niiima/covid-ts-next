@@ -5,6 +5,7 @@ type ICountryInfo = {
     iso2: string;
     iso3: string;
     lat: number;
+    long:number;
     _id: number;
 }
 export interface ICovidType {
@@ -30,7 +31,7 @@ export interface ICovidType {
     todayCases: number;
     todayDeaths: number;
     todayRecovered: number;
-    updated: string;
+    updated: number;
 }
 
 export interface ICovidSummary {

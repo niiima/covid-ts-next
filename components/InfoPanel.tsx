@@ -9,7 +9,7 @@ import makeAnimated from 'react-select/animated';
 import {selectColorStyles as colorStyles} from './infoPanelColorStyle';
 import CovidSummary from '../components/CovidSummary';
 interface IInfoPanelProps {
-  selected: ISuperCountryType;
+  selected?: ISuperCountryType;
   updateSelectedCountry: (country_code: string) => void;
   options: IOptionType[];
   data: ISuperCountryType[];
@@ -20,11 +20,11 @@ interface IInfoPanelProps {
 const animatedComponents = makeAnimated();
 
 const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
-  const [selectedValue, setSelectedValue] = useState([props.selected.iso2]) as any;
+  const [selectedValue, setSelectedValue] = useState([props.selected?.iso2]) as any;
 
   // handle onChange event of the Select passed to it's child component
   const handleChange = (e) => {
-    setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : [props.selected.iso2]);
+    setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : [props.selected?.iso2]);
     if (e)
       if (e.length !== 0)
         if (e[e.length - 1].hasOwnProperty("value"))
@@ -45,7 +45,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
       <br />
       <Select
         value={selectedValues}
-        defaultValue={props.selected.iso2}
+        defaultValue={props.selected?.iso2}
         onChange={e => handleChange(e)}
         options={props.options}
         closeMenuOnSelect={false}
@@ -57,7 +57,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
       />
       <br />
       <CovidCards selected={props.selected} covidInfoList={selectedCountries}></CovidCards>
-      <Pollution selected={props.selected.name} ></Pollution>
+      <Pollution selected={props.selected?.name} ></Pollution>
     </div >
   );
 }

@@ -14,30 +14,24 @@ export const getColor = (list: IFlagColorType[], key: number, a = 1, isWhiteOk: 
     const sortedList = list;
 
     let color = findColor(sortedList, key)
-    //console.log(a)
     let coloredConditional = whiteOrCustom(color, isWhiteOk,list,key,a) || "#999999"
-    // console.log(coloredConditional)
     return coloredConditional //alpha(coloredConditional, a)
 }
 
 function findColor(l, index) {
     let counter = index;
     if (counter < 0 || counter == 0) {
-        //debugger
         return l[0].color
     }
     else {
 
         if (l[counter] && l[counter] != undefined) {
-            //console.log(l[counter].color)
             return l[counter].color
         }
         else {
 
             console.log(l)
             for (let i = counter--; i > 0; i++) {
-                // console.log("loop")
-                // console.log(l)
                 if (l[i])
                     return l[i].color
             }
