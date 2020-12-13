@@ -33,20 +33,6 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
           props.updateSelectedCountry(e[e.length - 1].value);
   }
 
-  const dot = (color = '#bbbbbb') => ({
-    alignItems: 'center',
-    display: 'flex',
-    ':before': {
-      backgroundColor: color,
-      borderRadius: 10,
-      content: '" "',
-      display: 'block',
-      marginRight: 8,
-      height: 10,
-      width: 10,
-    },
-  });
-
   const colourStyles = {
     control: styles => ({ ...styles, backgroundColor: '#999' }),
     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
@@ -97,10 +83,6 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
         },
       }
     },
-
-    input: styles => ({ ...styles, ...dot() }),
-    placeholder: styles => ({ ...styles, ...dot() }),
-
   };
 
   const selectedValues = props.options.filter(obj => selectedValue.includes(obj.value));
