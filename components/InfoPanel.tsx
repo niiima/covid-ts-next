@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import Flag from './Flag';
 import { ISuperCountryType, IOptionType } from '../interfaces/data.interface';
+import { ICovidSummary } from '../interfaces/covid.interface';
+
 import { getColor } from '../utils/getFlagColors';
 import Pollution from './Pollution';
 import CovidCards from './CovidCard';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import alpha from 'color-alpha'
-
+import CovidSummary from '../components/CovidSummary';
 interface IInfoPanelProps {
   selected: ISuperCountryType;
   updateSelectedCountry: (country_code: string) => void;
   options: IOptionType[];
   data: ISuperCountryType[];
   initiated: boolean;
+  summaryInfo: ICovidSummary;
 }
 
 const animatedComponents = makeAnimated();
@@ -105,6 +108,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
 
   return (
     <div>
+      <CovidSummary summaryInfo ={props.summaryInfo} ></CovidSummary>
       <ul className="list-group">
         <li className="list-group-item">
           <Flag countryCode={selectedValues} />

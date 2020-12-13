@@ -17,3 +17,7 @@ module.exports = withBundleAnalyzer(withMDX(withPWA({
     dest: "public"
   }
 })))
+
+// const nextConfig = {
+//   // any configs you need
+// }

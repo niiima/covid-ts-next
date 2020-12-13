@@ -32,3 +32,9 @@ export interface ICovidType {
     todayRecovered: number;
     updated: string;
 }
+
+export interface ICovidSummary {
+     TotalConfirmed:number,
+     TotalDeaths:number,
+     TotalRecovered:number
+    }
