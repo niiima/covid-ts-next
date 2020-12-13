@@ -7,6 +7,7 @@ import gsap from 'gsap';
 import { getFlagColors } from '../utils/getFlagColors';
 import { EqualDivider, EDChild } from '../components/FlexDevider';
 import { ISuperCountryType } from '../interfaces/data.interface';
+//import { Draggable } from 'gsap/all';
 interface ICardItemProps {
   cardInfo: ISuperCountryType
 }
@@ -15,6 +16,7 @@ const CovidCardItem = (props: ICardItemProps) => {
   const { covid, colors } = props.cardInfo;
   const itemRef = useRef(null);
   useEffect(() => {
+    //Draggable.create(itemRef.current,{});
     gsap.from(itemRef.current, {
       autoAlpha: 0,
       ease: 'none',
@@ -50,7 +52,6 @@ const CovidCardItem = (props: ICardItemProps) => {
     } = covid;
 
     return (
-
       <CovidInfoContent color={cardColors[0]} hoverColor={cardColors[1]} ref={itemRef}>
         <EqualDivider style={{ color: cardColors[0] }}>
           <EDChild color={cardColors[3] ? cardColors[3] : cardColors[2] ? cardColors[2] : cardColors[1]}
@@ -69,7 +70,6 @@ const CovidCardItem = (props: ICardItemProps) => {
           <EDChild><Info color={"red"}>Deaths:{millify(todayDeaths)}</Info></EDChild>
         </EqualDivider>
       </CovidInfoContent>
-
     )
   }
   else {

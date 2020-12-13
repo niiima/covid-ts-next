@@ -15,4 +15,4 @@ const IndexSkeleton = () => (
     </>
 );
 
-export default IndexSkeleton;
+export default IndexSkeleton
