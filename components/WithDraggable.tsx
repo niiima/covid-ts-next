@@ -77,11 +77,12 @@ const WithDraggable = (props) => {
   return (
     <Draggable {...dragHandlers}
       axis={useWindowSize().width > 700 ? "x" : "y"}
-    // handle=".handle"
-    // defaultPosition={{ x: 0, y: 0 }}
-    // position={null}
-    // grid={[25, 25]}
-    // scale={1}
+      // handle=".handle"
+      // defaultPosition={{ x: 0, y: 0 }}
+      // position={null}
+      grid={[25, 25]}
+      // scale={1}
+      bounds="body"
     >
       {props.children}
     </Draggable>
