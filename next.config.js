@@ -6,9 +6,9 @@
 //   extension: /\.mdx?$/
 // });
 
-// const withBundleAnalyzer = require('@next/bundle-analyzer')({
-//     enabled: process.env.ANALYZE === 'true',
-//   })
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+  })
 
 // module.exports = withBundleAnalyzer(withMDX(withPWA({
 //   pageExtensions: ["tsx", "mdx"],
@@ -18,6 +18,7 @@
 //   }
 // })))
 
-// const nextConfig = {
-//   // any configs you need
-// }
+const nextConfig = {
+  // any configs you need
+}
+module.exports = withBundleAnalyzer(nextConfig);

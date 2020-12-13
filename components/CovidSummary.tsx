@@ -1,5 +1,4 @@
-//import { ICovidSummary } from '../interfaces/covid.interface'
-
+import {HiOutlineUserRemove} from 'react-icons/hi' 
 const CovidSummary = (props) => {
     const { TotalConfirmed,
         TotalDeaths,
@@ -17,6 +16,7 @@ const CovidSummary = (props) => {
                                     <div className="row no-gutters align-items-center">
                                         <div className="col-auto">
                                             <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">{TotalConfirmed}</div>
+                                            <HiOutlineUserRemove className="h5 mb-0 mr-3 font-weight-bold text-gray-800" color={"red"}></HiOutlineUserRemove>
                                         </div>
 
                                     </div>

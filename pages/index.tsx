@@ -33,20 +33,16 @@ class Index extends React.Component<IAppProps, IAppState> {
   }
 
   static async getInitialProps() {
-
-    let location = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.NEXT_PUBLIC_GEOIP_API_KEY}`)
+    let location = await fetch(`http://ip-api.com/json`)
       .then(r => {
         if (r.ok)
           return r.json();
         else
-          return { country_code2: 'ir' }; // Return default country
-      }).catch(err => console.log(err));
+          return { countryCode: 'IR' }; // Return default country on fail to detect ip
+      }).catch(err => console.log(err))//.then(data=>console.log(data));
 
     const total = await fetch('https://api.covid19api.com/world/total').then(r => {
-      if (r.ok)
         return r.json();
-      else
-        return { country_code2: 'ir' }; // Return default country
     }).catch(err => console.log(err));
 
     const { data } = await getCountries();
@@ -61,7 +57,7 @@ class Index extends React.Component<IAppProps, IAppState> {
             color: item.colors
           }
       }),
-      clientLocation: location.country_code2,
+      clientLocation: location.countryCode,
       totalInfo: total
     };
   }
