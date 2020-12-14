@@ -4,10 +4,18 @@ import _ from 'lodash';
 import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
 import getAppData from '../utils/fetchInitialData';
-import { IAppProps } from '../interfaces/app.interface';
 import IndexSkeleton from '../components/IndexSkeleton';
 import useAsync from '../hooks/useAsync';
 import { sampleData, sampleOptions } from '../interfaces/data.interface';
+import { IOptionType, ISuperCountryType } from '../interfaces/data.interface';
+import { ICovidSummary } from '../interfaces/covid.interface'
+
+export interface IAppProps {
+  data: ISuperCountryType[] | any;
+  options: IOptionType[] | any;
+  clientLocation: string;
+  totalInfo: ICovidSummary;
+}
 
 const Index: NextPage<IAppProps> = ((props) => {
   const [selected, setSelected] = useState(props.data?.find((country => country.iso2 == props.clientLocation)));

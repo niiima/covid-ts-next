@@ -7,7 +7,7 @@ export interface IOptionType {
     color: IFlagColorType[]
 }
 export interface ISuperCountryType extends ICountryType {
-    covid: ICovidType | undefined | null;
+    covid: ICovidType;
 }
 
 export const emptyColorList: IFlagColorType[] = [{ color: "#fff", percentage: 50 }, { color: "#999", percentage: 50 }];
