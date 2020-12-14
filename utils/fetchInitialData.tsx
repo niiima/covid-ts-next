@@ -3,13 +3,13 @@ import { ICountryType, IFlagColorType } from '../interfaces/country.interface';
 import { ICovidType } from '../interfaces/covid.interface';
 const countries: ICountryType[] = require('../public/country-list.json');
 const flagData: IFlagColorType[][] = require('../public/flag_data.json');
-import { emptyColorList, sampleTotalInfo, sampleData,ISuperCountryType } from '../interfaces/data.interface'
+import { emptyColorList, sampleTotalInfo, sampleCovid } from '../interfaces/data.interface'
 const getAppData = async () => {
     const covidDataPromise: Promise<ICovidType[]> = await fetch("https://corona.lmao.ninja/v2/countries?yesterday=&sort=").then(response => {
         if (response.ok)
             return response.json()
         else
-            return {...sampleData.covid}
+            return sampleCovid 
     }).then(data => data).catch(err => console.log(err));
 
     const colors: IFlagColorType[][] = [];
@@ -44,15 +44,20 @@ const getAppData = async () => {
         const covidData = await covidDataPromise;
         return list.map((country) => {
             if (country) {
-                let covidInfo = covidData.find(info => {
+                let covidInfo: ICovidType | undefined = covidData.find(info => {
                     if (info.countryInfo.iso2 === country.iso2)
                         return info
                 });
-                //if (covidInfo)
-                return {
+                if (covidInfo)
+                    return {
+                        ...country,
+                        covid: covidInfo
+                    }
+                else return {
                     ...country,
-                    covid: covidInfo
+                    covid: null
                 }
+
             }
         })
     })();
@@ -79,10 +84,10 @@ const getAppData = async () => {
     }).catch(err => console.log(err));
 
     return {
-        data: data ? data.slice().sort(compareValues('name', 'asc')) : null,// sampleData,
+        data: data.slice().sort(compareValues('name', 'asc')),// sampleData,
         location: location.countryCode.toUpperCase(),
         total: total,
-        options: data ? data.map(getOption) : null, //sampleData.map(getOption)
+        options: data.map(getOption), //sampleData.map(getOption)
     };
 }
 

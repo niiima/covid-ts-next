@@ -7,30 +7,9 @@ import getAppData from '../utils/fetchInitialData';
 import { IAppProps } from '../interfaces/app.interface';
 import IndexSkeleton from '../components/IndexSkeleton';
 import useAsync from '../hooks/useAsync';
-import { sampleData } from '../interfaces/data.interface';
+import { sampleData, sampleOptions } from '../interfaces/data.interface';
 
-
-//class Index extends React.Component<IAppProps, IAppState> {
 const Index: NextPage<IAppProps> = ((props) => {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {
-  //     ...props,
-  //     initiated: false,
-  //     selected: { ...props.data.find(c => c.iso2 === props.clientLocation.toUpperCase()) },
-  //   }
-  // }
-
-  // static async getInitialProps() {
-  //   const { data, location, total, options } = await getAppData();
-  //   return {
-  //     data: data,
-  //     options: options,
-  //     clientLocation: location,
-  //     totalInfo: total
-  //   };
-  // }
-
   const [selected, setSelected] = useState(props.data?.find((country => country.iso2 == props.clientLocation)));
 
   const updateSelectedCountry = (country_code: string) => {
@@ -38,7 +17,7 @@ const Index: NextPage<IAppProps> = ((props) => {
       if (country_code === selected.iso2)
         return false;
 
-    let selectedCovidInfo = props.data?.find(c => c.iso2 === country_code);
+    let selectedCovidInfo = props.data?.find(country => country.iso2 === country_code);
     if (selectedCovidInfo) {
       setSelected(selectedCovidInfo)
       return true;
@@ -48,36 +27,25 @@ const Index: NextPage<IAppProps> = ((props) => {
     }
   }
 
-  // componentDidMount() {
-  //   setTimeout(() => this.setState({
-  //     initiated: true,
-  //   }), 2000);
-  // }
-
-  //render() {
-
   const {
-    //execute, 
-    status,
-    //value, 
+    status, //,value, //,execute
     error
-  } = useAsync<string>(customDelayOnLoad, false);
+  } = useAsync<string>(customDelayOnLoad, true);
 
   return (
     <Layout>
-      {/* {this.state.initiated ? */}
-      {status === 'success' ?
+      {status === 'success' || status === 'idle' ?
         <InfoPanel
-          options={props.options}
+          options={props.options ? props.options : sampleOptions}
           selected={selected}
           updateSelectedCountry={(country: string) =>
             updateSelectedCountry(country)
           }
-          data={props.data}
+          data={props.data ? props.data : sampleData}
           initiated={true}
           summaryInfo={props.totalInfo}
         />
-        : status === 'pending' ? <IndexSkeleton /> : status === 'error' ? <div>Error: {error}</div> : <div>Error</div>
+        : status === 'pending' ? <IndexSkeleton /> : status === 'error' ? <div>Error: {error}</div> : <div>Offline</div>
       }
     </Layout>
   )
@@ -99,6 +67,5 @@ const customDelayOnLoad = (): Promise<string> => new Promise((resolve, reject) =
     return true ? resolve('ok') : reject('no');
   }, 2000);
 });
-
 
 export default Index;

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import Flag from './Flag';
 import { ISuperCountryType, IOptionType } from '../interfaces/data.interface';
 import { ICovidSummary } from '../interfaces/covid.interface';
-import Pollution from './Pollution';
 import CovidCards from './CovidCard';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-import {selectColorStyles as colorStyles} from './infoPanelColorStyle';
+import { selectColorStyles as colorStyles } from './infoPanelColorStyle';
 import CovidSummary from '../components/CovidSummary';
+//import Pollution from './Pollution';
 interface IInfoPanelProps {
   selected?: ISuperCountryType;
   updateSelectedCountry: (country_code: string) => void;
@@ -36,7 +36,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
 
   return (
     <div>
-      <CovidSummary summaryInfo ={props.summaryInfo} ></CovidSummary>
+      <CovidSummary summaryInfo={props.summaryInfo} ></CovidSummary>
       <ul className="list-group">
         <li className="list-group-item">
           <Flag countryCode={selectedValues} />
@@ -57,7 +57,7 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
       />
       <br />
       <CovidCards selected={props.selected} covidInfoList={selectedCountries}></CovidCards>
-      <Pollution selected={props.selected?.name} ></Pollution>
+      {/* <Pollution selected={props.selected?.name} ></Pollution> */}
     </div >
   );
 }

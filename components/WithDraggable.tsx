@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Draggable from 'react-draggable';
 import useWindowSize from '../hooks/useWindowSize';
 const WithDraggable = (props) => {
@@ -12,18 +12,18 @@ const WithDraggable = (props) => {
   //   }
   // };
 
-  const [deltaPosition, setDeltaPosition] = useState({
-    x: 0, y: 0
-  })
-  const handleDrag = (e, ui) => {
-    const { x, y } = deltaPosition;
-    setDeltaPosition({
-      x: x + ui.deltaX,
-      y: y + ui.deltaY,
-    }
-    );
-  };
+  // const [deltaPosition, setDeltaPosition] = useState({
+  //   x: 0, y: 0
+  // });
 
+  // const handleDrag = (e, ui) => {
+  //   const { x, y } = deltaPosition;
+  //   setDeltaPosition({
+  //     x: x + ui.deltaX,
+  //     y: y + ui.deltaY,
+  //   }
+  //   );
+  // };
 
   const [activeDrags, setActiveDrags] = useState(0);
   const onStart = () => {
@@ -36,33 +36,32 @@ const WithDraggable = (props) => {
   };
 
   // For controlled component
-  const [controlledPosition, setControlledPosition] = useState({ x: 0, y: 0 })
-  const adjustXPos = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const { x, y } = controlledPosition;
-    setControlledPosition({ x: x - 10, y });
-  };
+  // const [controlledPosition, setControlledPosition] = useState({ x: 0, y: 0 })
+  // const adjustXPos = (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   const { x, y } = controlledPosition;
+  //   setControlledPosition({ x: x - 10, y });
+  // };
 
-  const adjustYPos = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    //const { controlledPosition } = this.state;
-    const { x, y } = controlledPosition;
-    // this.setState({ controlledPosition: { x, y: y - 10 } });
-    setControlledPosition({ x, y: y - 10 });
+  // const adjustYPos = (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   //const { controlledPosition } = this.state;
+  //   const { x, y } = controlledPosition;
+  //   // this.setState({ controlledPosition: { x, y: y - 10 } });
+  //   setControlledPosition({ x, y: y - 10 });
+  // };
 
-  };
+  // const onControlledDrag = (e, position) => {
+  //   const { x, y } = position;
+  //   setControlledPosition({ x, y });
+  // };
 
-  const onControlledDrag = (e, position) => {
-    const { x, y } = position;
-    setControlledPosition({ x, y });
-  };
-
-  const onControlledDragStop = (e, position) => {
-    onControlledDrag(e, position);
-    onStop();
-  };
+  // const onControlledDragStop = (e, position) => {
+  //   onControlledDrag(e, position);
+  //   onStop();
+  // };
 
   const dragHandlers = { onStart: onStart, onStop: onStop };
   //const {deltaPosition, controlledPosition} = this.state;
@@ -76,7 +75,7 @@ const WithDraggable = (props) => {
 
   return (
     <Draggable {...dragHandlers}
-      axis={useWindowSize().width > 700 ? "x" : "y"}
+      axis={useWindowSize().width > 700 ? "both" : "y"}
       // handle=".handle"
       // defaultPosition={{ x: 0, y: 0 }}
       // position={null}
