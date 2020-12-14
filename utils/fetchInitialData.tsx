@@ -1,23 +1,42 @@
 import { compareValues } from './sortCountries'
 import { ICountryType, IFlagColorType } from '../interfaces/country.interface';
 import { ICovidType } from '../interfaces/covid.interface';
+import { emptyColorList, sampleTotalInfo, sampleCovid, EmptyCovidObject, sampleData } from '../interfaces/data.interface'
+
 const countries: ICountryType[] = require('../public/country-list.json');
 const flagData: IFlagColorType[][] = require('../public/flag_data.json');
-import { emptyColorList, sampleTotalInfo, sampleCovid } from '../interfaces/data.interface'
-const getAppData = async () => {
-    const covidDataPromise: Promise<ICovidType[]> = await fetch("https://corona.lmao.ninja/v2/countries?yesterday=&sort=").then(response => {
-        if (response.ok)
-            return response.json()
+const userLocationPromise: () => Promise<any> = async () => await fetch(`http://ip-api.com/json`)
+    .then(r => {
+        if (r.ok)
+            return r.json();
         else
-            return sampleCovid 
-    }).then(data => data).catch(err => console.log(err));
+            return { countryCode: 'IR' }; //
+    }).catch(err => console.log(err))
 
-    const colors: IFlagColorType[][] = [];
-    Array.from(Object.values(flagData)).forEach(color => {
-        //console.log(typeof color)
-        if (color)
-            colors.push(color.sort((a: IFlagColorType, b: IFlagColorType) => b.percentage - a.percentage));
-    });
+const totalCovidCasesPromise: () => Promise<any> = async () => await fetch('https://api.covid19api.com/world/total').then(r => {
+    if (r.ok)
+        return r.json();
+    else return sampleTotalInfo;
+}).catch(err => console.log(err));
+
+const covidDataPromise: () => Promise<ICovidType[]> = async () => await fetch("https://corona.lmao.ninja/v2/countries?yesterday=&sort=")
+    .then(async response => {
+        if (response.ok) {
+            const result = await response.json()
+            if (result.length)
+                return result
+            else
+                return sampleCovid
+        }
+    }).catch(err => console.log(err));
+
+const colors: IFlagColorType[][] = [];
+Array.from(Object.values(flagData)).forEach(color => {
+    if (color)
+        colors.push(color.sort((a: IFlagColorType, b: IFlagColorType) => b.percentage - a.percentage));
+});
+
+const getAppData = async () => {
 
     const list = Object.keys(flagData).map((c, i) => {
         const row = countries.find(country => {
@@ -26,23 +45,16 @@ const getAppData = async () => {
                     ...country,
                 }
         });
+        return {
+            ...row ? row : countries[i],
+            colors: colors[i] ? colors[i] : emptyColorList.slice()
+        }
+    });
 
-        return row ? {
-            ...row,
-            //id: uuidv4(),
-            colors: colors[i]
-        } :
-            {
-                ...countries[i],
-                //id: uuidv4(),
-                colors: emptyColorList.slice()
-            }
-    }
-    );
-
-    const DATUM = (async () => {
-        const covidData = await covidDataPromise;
-        return list.map((country) => {
+    return (async () => {
+        const [covidData, location, total] =
+            await Promise.all([covidDataPromise(), userLocationPromise(), totalCovidCasesPromise()])
+        const data = list.map((country) => {
             if (country) {
                 let covidInfo: ICovidType | undefined = covidData.find(info => {
                     if (info.countryInfo.iso2 === country.iso2)
@@ -55,40 +67,19 @@ const getAppData = async () => {
                     }
                 else return {
                     ...country,
-                    covid: null
+                    covid: EmptyCovidObject
                 }
-
             }
-        })
+        });
+
+        const superData = data.slice().sort(compareValues('name', 'asc'))
+        return {
+            data: superData.length ? superData : sampleData,// sampleData,
+            location: location.countryCode.toUpperCase(),
+            total: total,
+            options: data.map(getOption), //sampleData.map(getOption)
+        };
     })();
-
-    const data = await DATUM;
-    // var valueArr = data.map(function(item){ return item?.iso2 });
-    // var isDuplicate = valueArr.some(function(item, idx){ 
-    //     return valueArr.indexOf(item) != idx 
-    // });
-    // console.log(isDuplicate);
-
-    const location = await fetch(`http://ip-api.com/json`)
-        .then(r => {
-            if (r.ok)
-                return r.json();
-            else
-                return { countryCode: 'IR' }; // Return default country on fail to detect ip
-        }).catch(err => console.log(err))//.then(data=>console.log(data));
-
-    const total = await fetch('https://api.covid19api.com/world/total').then(r => {
-        if (r.ok)
-            return r.json();
-        else return sampleTotalInfo;
-    }).catch(err => console.log(err));
-
-    return {
-        data: data.slice().sort(compareValues('name', 'asc')),// sampleData,
-        location: location.countryCode.toUpperCase(),
-        total: total,
-        options: data.map(getOption), //sampleData.map(getOption)
-    };
 }
 
 function getOption(item, index) {

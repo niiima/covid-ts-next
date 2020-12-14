@@ -13,10 +13,9 @@ interface ICardItemProps {
 }
 
 const CovidCardItem = (props: ICardItemProps) => {
-  //console.log(props.cardInfo);
   const { covid, colors } = props.cardInfo;
   const itemRef = useRef(null);
-
+  const cardColors = getFlagColors(colors);
   useEffect(() => {
     gsap.from(itemRef.current, {
       autoAlpha: 0,
@@ -40,7 +39,7 @@ const CovidCardItem = (props: ICardItemProps) => {
     });
   }, []);
 
-  const cardColors = getFlagColors(colors);
+
   if (covid) {
     const {
       continent,

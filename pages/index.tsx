@@ -20,7 +20,7 @@ export interface IAppProps {
 const Index: NextPage<IAppProps> = ((props) => {
   const [selected, setSelected] = useState(props.data?.find((country => country.iso2 == props.clientLocation)));
 
-  const updateSelectedCountry = (country_code: string) => {
+  const handleSelectChange = (country_code: string) => {
     if (selected)
       if (country_code === selected.iso2)
         return false;
@@ -46,8 +46,8 @@ const Index: NextPage<IAppProps> = ((props) => {
         <InfoPanel
           options={props.options ? props.options : sampleOptions}
           selected={selected}
-          updateSelectedCountry={(country: string) =>
-            updateSelectedCountry(country)
+          handleSelectChange={(country: string) =>
+            handleSelectChange(country)
           }
           data={props.data ? props.data : sampleData}
           initiated={true}

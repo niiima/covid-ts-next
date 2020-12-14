@@ -9,10 +9,10 @@ import { selectColorStyles as colorStyles } from './infoPanelColorStyle';
 import CovidSummary from '../components/CovidSummary';
 //import Pollution from './Pollution';
 interface IInfoPanelProps {
-  selected?: ISuperCountryType;
-  updateSelectedCountry: (country_code: string) => void;
+  selected: ISuperCountryType;
+  handleSelectChange: (country_code: string) => void;
   options: IOptionType[];
-  data: ISuperCountryType[];
+  data: ISuperCountryType[] | undefined;
   initiated: boolean;
   summaryInfo: ICovidSummary;
 }
@@ -28,11 +28,11 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
     if (e)
       if (e.length !== 0)
         if (e[e.length - 1].hasOwnProperty("value"))
-          props.updateSelectedCountry(e[e.length - 1].value);
+          props.handleSelectChange(e[e.length - 1].value);
   }
 
   const selectedValues = props.options.filter(obj => selectedValue.includes(obj.value));
-  const selectedCountries = props.data.filter(obj => selectedValue.includes(obj.iso2));
+  const selectedCountries = props.data ? props.data.filter(obj => selectedValue.includes(obj.iso2)) : undefined;
 
   return (
     <div>
