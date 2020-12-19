@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { NextPage } from 'next';
 import _ from 'lodash';
-import Layout from '../components/Layout';
 import InfoPanel from '../components/InfoPanel';
-import getAppData from '../utils/fetchInitialData';
+import getAppData from '../utils/getInitialData';
 import IndexSkeleton from '../components/IndexSkeleton';
 import useAsync from '../hooks/useAsync';
 import { sampleData, sampleOptions } from '../interfaces/data.interface';
@@ -41,7 +40,7 @@ const Index: NextPage<IAppProps> = ((props) => {
   } = useAsync<string>(customDelayOnLoad, true);
 
   return (
-    <Layout>
+    <>
       {status === 'success' || status === 'idle' ?
         <InfoPanel
           options={props.options ? props.options : sampleOptions}
@@ -55,14 +54,13 @@ const Index: NextPage<IAppProps> = ((props) => {
         />
         : status === 'pending' ? <IndexSkeleton /> : status === 'error' ? <div>Error: {error}</div> : <div>Offline</div>
       }
-    </Layout>
+    </>
   )
 });
 
 
 Index.getInitialProps = async (): Promise<IAppProps> => {
   const { data, options, location, total } = await getAppData();
-  //console.log(data, location, total, options )
   return {
     data: data ? data : sampleData,
     options: options,

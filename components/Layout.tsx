@@ -21,21 +21,22 @@ const ThemeContext = createContext(themes.light);
 
 const Layout: React.FunctionComponent<LayoutProps> = (props) => {
   //console.log(props.children ? props.children["props"] : null)
-  return (<ThemeContext.Provider value={themes.dark}>
-    <Head>
-      <title>Countries</title>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css" />
-    </Head>
-    <Fragment>
-      <GlobalStyle />
-      <Navbar />
-      <div className="container">
-        {props.children}
-      </div>
-    </Fragment>
-  </ThemeContext.Provider>
+  return (
+    <ThemeContext.Provider value={themes.light}>
+      <Head>
+        <title>{props.title ? props.title : "Covid showcase"}</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css" />
+      </Head>
+      <Fragment>
+        <GlobalStyle />
+        <Navbar />
+        <div className="container">
+          {props.children}
+        </div>
+      </Fragment>
+    </ThemeContext.Provider>
   );
 }
 export default Layout;

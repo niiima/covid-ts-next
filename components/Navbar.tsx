@@ -1,16 +1,16 @@
 import Link from 'next/link';
-
+import styled from 'styled-components'
 const Navbar = () => (
-  <nav className="navbar navbar-expand navbar-dark bg-dark mb-4">
+  <nav className="navbar navbar-expand  mb-4">
     <div className="container">
       <a className="navbar-brand" href="#">Country News</a>
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <Link href="/"><a className="nav-link">Home</a></Link>
+            <Link href="/" shallow={true}><a className="nav-link">Home</a></Link>
           </li>
           <li className="nav-item">
-            {/* <Link href="/about" shallow={true}><a className="nav-link">About</a></Link> */}
+            <Link href="/about" shallow={true}><a className="nav-link">About</a></Link>
           </li>
         </ul>
       </div>
@@ -18,4 +18,9 @@ const Navbar = () => (
   </nav>
 );
 
-export default Navbar;
+const StyledNavbar = styled(Navbar)`
+    color: var(--text-primary);
+    background-color: var(--background);
+    box-shadow: var(--shadow);
+`
+export default StyledNavbar;//Navbar;
