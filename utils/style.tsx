@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
     color-scheme: light dark;
 }
 
+
 @media (prefers-color-scheme: light) {
     :root {
         --text-primary: #24292e;
@@ -25,6 +26,17 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     //background: teal;
     font-family: 'Saira Condensed','Open-Sans', Helvetica, Sans-Serif;
+  }
+
+  //useDarkMode hook consume this
+  body.light-mode {
+  background-color: #999;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+  body.dark-mode {
+    background-color: #1a1919;
+    color: #999;
   }
 
 .select-menu-outer{top: auto; bottom: 100%}

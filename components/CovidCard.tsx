@@ -32,12 +32,11 @@ justify-content: center;
 -webkit-flex-wrap: wrap;
 flex-wrap: wrap;
 margin-top: 15px;
-//padding: 1.5%;
 box-sizing: border-box;
 color: ${props => props.color};    
 
 p.no-content{
-    color: "#fff"
+    color: var("--text-primary"); //#fff"
 }
 `
 

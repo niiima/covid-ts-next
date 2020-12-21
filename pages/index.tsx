@@ -71,7 +71,7 @@ Index.getInitialProps = async (): Promise<IAppProps> => {
 const customDelayOnLoad = (): Promise<string> => new Promise((resolve, reject) => {
   setTimeout(() => {
     return true ? resolve('ok') : reject('no');
-  }, 2000);
+  }, 1000);
 });
 
 export default Index;

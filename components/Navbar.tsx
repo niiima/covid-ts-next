@@ -1,9 +1,11 @@
 import Link from 'next/link';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import DarkModeToggle from './DarkModeToggle';
 const Navbar = () => (
   <nav className="navbar navbar-expand  mb-4">
     <div className="container">
       <a className="navbar-brand" href="#">Country News</a>
+      <DarkModeToggle/>
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">

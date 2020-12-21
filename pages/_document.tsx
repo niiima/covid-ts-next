@@ -15,6 +15,7 @@ class MyDocument extends Document {
         <meta name="color-scheme" content="dark light"></meta>
         </Head>
         <body>
+        <script src="noflash.js" />
           <Main />
           <NextScript />
         </body>
