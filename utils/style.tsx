@@ -21,28 +21,50 @@ const GlobalStyle = createGlobalStyle`
         --shadow: rgba(0, 0, 0, 0.35) 0px 2px 5px 0px;
     }
 }
-  body {
-    margin: 0;
-    padding: 0;
-    //background: teal;
-    font-family: 'Saira Condensed','Open-Sans', Helvetica, Sans-Serif;
-  }
 
-  //useDarkMode hook consume this
-  body.light-mode {
-  background-color: #999;
+body {
+  margin: 0;
+  padding: 0;
+  //background: teal;
+  font-family: 'Saira Condensed','Open-Sans', Helvetica, Sans-Serif;
+}
+
+//useDarkMode hook consume this
+body.light-mode {
+  background-color: #eeeeee;
   color: #333;
   transition: background-color 0.3s ease;
-}
-  body.dark-mode {
-    background-color: #1a1919;
-    color: #999;
+  & a{
+    color: #333 !important; 
+    &:hover{
+      color: #555555 !important; 
+    }
   }
+}
+body.dark-mode {
+    background-color: #212121;
+    color: #999;
+    & a{
+    color: #fff !important; 
+    &:hover{
+      color: #e2e2e2 !important; 
+    }
+  }
+}
 
 .select-menu-outer{top: auto; bottom: 100%}
 .drop-up .Select-menu-outer {
 top: auto;
 bottom: 100%;
+}
+
+.card{
+  background-color:transparent !important;
+}
+
+.navbar {
+  text-shadow:none !important;
+  font-weight:900;
 }
 `;
 

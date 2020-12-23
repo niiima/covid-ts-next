@@ -17,6 +17,6 @@ export const EqualDivider = styled.div`
 
 export const EDChild = styled.div`
   padding: 0.025rem 0.05rem;
-  background: ${props => props.color ? props.color : "rgba(0,0,0,0.1)"};
+  /* background: ${props => props.color ? props.color : "rgba(0,0,0,0.1)"}; */
   vertical-align: middle;
 `;
