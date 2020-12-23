@@ -1,5 +1,5 @@
 import React from 'react'
-import fetch from 'isomorphic-unfetch'
+//import fetch from 'isomorphic-unfetch'
 interface RedditPost{
     data:{[key:string  ]: string};
 }
