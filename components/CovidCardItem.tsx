@@ -18,10 +18,10 @@ const CovidCardItem = (props: ICardItemProps) => {
   const itemRef = useRef(null);
   const cardColors = getFlagColors(colors);
   // console.log(cardColors)
-  
+
   useEffect(() => {
-    const tl = gsap.timeline();
-    tl.set(".before", {opacity:0})
+    let tl = gsap.timeline();
+    //tl.set(itemRef, {opacity:0})
     tl.from(itemRef.current, {
       autoAlpha: 0,
       ease: 'none',
@@ -29,7 +29,7 @@ const CovidCardItem = (props: ICardItemProps) => {
       rotation: 0,
       x: -20,
       duration: 1,
-      boxShadow: "0px 80px 100px 3px rgba(27,34,52,0.7)"
+      //boxShadow: "0px 80px 100px 3px rgba(27,34,52,0.7)"
     })
     tl.to(itemRef.current, {
       x: 0,
@@ -52,31 +52,31 @@ const CovidCardItem = (props: ICardItemProps) => {
       todayDeaths,
       todayRecovered,
       country,
-      countryInfo
+      //countryInfo
     } = covid;
 
     return (
 
       <WithDraggable>
         <CovidInfoContent color={cardColors[0]} hoverColor={cardColors[1]} ref={itemRef}>
-          <div className="card-front">
-            <EqualDivider style={{ color: cardColors[0] }}>
-              <EDChild color={cardColors[3] ? cardColors[3] : cardColors[2] ? cardColors[2] : cardColors[1]}
-                className="text-left">
-                <BiWorld size="30px" style={{ color: cardColors[0], width: 35 }}></BiWorld>
-              </EDChild>
-              <EDChild color={cardColors[1]} className='font-weight-bold text-center text-nowrap'>{country}</EDChild>
-              <EDChild color={cardColors[0]} className='font-weight-light text-center text-nowrap'>
-                <span style={{ color: cardColors[2] ? cardColors[2] : cardColors[1] }} >{continent}</span></EDChild>
-            </EqualDivider>
-            <EqualDivider vertical={true}>
-              <EDChild><Info>Deaths per each million: {deathsPerOneMillion}</Info></EDChild>
-              <EDChild><Info color={cardColors} colorIndex={2}>Total population {millify(population)}</Info></EDChild>
-              <EDChild><Info color={"brown"}>Cases: {millify(todayCases)}</Info></EDChild>
-              <EDChild><Info color={"green"}>Recovered: {millify(todayRecovered)}</Info></EDChild>
-              <EDChild><Info color={"red"}>Deaths:{millify(todayDeaths)}</Info></EDChild>
-            </EqualDivider>
-          </div>
+          {/* <div className="card-front"> */}
+          <EqualDivider style={{ color: cardColors[0] }}>
+            <EDChild color={cardColors[3] ? cardColors[3] : cardColors[2] ? cardColors[2] : cardColors[1]}
+              className="text-left">
+              <BiWorld size="30px" style={{ color: cardColors[0], width: 35 }}></BiWorld>
+            </EDChild>
+            <EDChild color={cardColors[1]} className='font-weight-bold text-center text-nowrap'>{country}</EDChild>
+            <EDChild color={cardColors[0]} className='font-weight-light text-center text-nowrap'>
+              <span style={{ color: cardColors[2] ? cardColors[2] : cardColors[1] }} >{continent}</span></EDChild>
+          </EqualDivider>
+          <EqualDivider vertical={true}>
+            <EDChild><Info>Deaths per each million: {deathsPerOneMillion}</Info></EDChild>
+            <EDChild><Info color={cardColors} colorIndex={2}>Total population {millify(population)}</Info></EDChild>
+            <EDChild><Info color={"brown"}>Cases: {millify(todayCases)}</Info></EDChild>
+            <EDChild><Info color={"green"}>Recovered: {millify(todayRecovered)}</Info></EDChild>
+            <EDChild><Info color={"red"}>Deaths:{millify(todayDeaths)}</Info></EDChild>
+          </EqualDivider>
+          {/* </div>
           <div className="card-back">
           <img
                             // w20,w40,w80,w160,w320,w640,,w1280,w2560
@@ -84,12 +84,13 @@ const CovidCardItem = (props: ICardItemProps) => {
                             width="110"
                             alt={country}
                             className="card__image" />
-            </div>
+            </div> */}
         </CovidInfoContent>
       </WithDraggable >
     )
   }
   else {
+    // Cards with no Covid info
     let name = props.cardInfo.name;
     return (
       <WithDraggable>
@@ -123,7 +124,7 @@ const CovidInfoContent = styled.article`
   list-style: none;
   transition:all 1s ease;
   border-color:${props => props.hoverColor ? props.hoverColor : "#fff"} !important;
-  background-color: transparent; //${props => props.color ? props.color : "#fff"} !important;
+  background-color: transparent;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);  
   &:hover{
   border-color: ${props => props.color ? props.color : "#fff"} !important;
@@ -132,6 +133,7 @@ const CovidInfoContent = styled.article`
 }
 `
 const Info = styled.li`
-/* color: rgba(256,256,256,0.8);  */
-// ${props => props.color ? props.color.length && typeof props.color === "string" ? props.color : props.color[1] : "rgba(0,0,0,0.9"};
+ &:hover{
+   text-decoration: underline;
+ }
 `

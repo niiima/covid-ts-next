@@ -1,19 +1,8 @@
 import React from 'react';
 import useDarkMode from 'use-dark-mode';
-import styled from 'styled-components'
-const DarkModeToggle = () => {
-    const darkMode = useDarkMode(false);
-    return (
-        <ToggleButton status={darkMode.value} onClick={darkMode.value ? darkMode.disable : darkMode.enable}>
-            <svg viewBox="0 0 24 24" fill="none" >
-                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-                </svg>
-            <input type="checkbox" checked={darkMode.value} onChange={darkMode.toggle} hidden />
-        </ToggleButton>
-    );
-};
+import styled from 'styled-components';
 
-const ToggleButton = styled.span`
+const DarkModeToggle = styled.span`
  width: 22px;
  height: 30px;
  flex-shrink: 0;
@@ -25,7 +14,25 @@ const ToggleButton = styled.span`
         stroke-linecap:round;
         stroke-linejoin:round;
         transition: 0.5s;
-        fill:${props=>props.status === true ? "gold" : "none" }
+        fill:${props => props.status === true ? "gold" : "none"}
  }
 `;
-export default DarkModeToggle;
+
+const Toggler = () => {
+    const darkMode = useDarkMode(false);
+    return (
+        <DarkModeToggle
+            status={darkMode.value}
+            onClick={darkMode.value ? darkMode.disable : darkMode.enable}>
+            <svg viewBox="0 0 24 24" fill="none" >
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+            </svg>
+            <input type="checkbox"
+                checked={darkMode.value}
+                onChange={darkMode.toggle}
+                hidden />
+        </DarkModeToggle>
+    );
+};
+
+export default Toggler;

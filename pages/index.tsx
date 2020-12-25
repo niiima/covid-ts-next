@@ -58,7 +58,6 @@ const Index: NextPage<IAppProps> = ((props) => {
   )
 });
 
-
 Index.getInitialProps = async (): Promise<IAppProps> => {
   const { data, options, location, total } = await getAppData();
   return {
