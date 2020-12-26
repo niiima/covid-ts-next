@@ -5,13 +5,19 @@ import { emptyColorList, sampleTotalInfo, sampleCovid, EmptyCovidObject, sampleD
 
 const countries: ICountryType[] = require('../public/country-list.json');
 const flagData: IFlagColorType[][] = require('../public/flag_data.json');
-const userLocationPromise: () => Promise<any> = async () => await fetch(`http://ip-api.com/json`)
-    .then(r => {
-        if (r.ok)
-            return r.json();
-        else
-            return { countryCode: 'IR' }; //
-    }).catch(err => console.log(err))
+const userLocationPromise: () => Promise<any> = async () => {
+    const defaultCountry = { country_code: "IR" };
+    if (process.env.GEOIP_API_KEY)
+        return await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${process.env.GEOIP_API_KEY}`)
+            .then(r => {
+                if (r.ok)
+                    return r.json();
+                else
+                    return defaultCountry;
+            }).catch(err => console.log(err));
+    else
+        return defaultCountry;
+}
 
 const totalCovidCasesPromise: () => Promise<any> = async () => await fetch('https://api.covid19api.com/world/total').then(r => {
     if (r.ok)
@@ -75,7 +81,7 @@ const getAppData = async () => {
         const superData = data.slice().sort(compareValues('name', 'asc'))
         return {
             data: superData.length ? superData : sampleData,// sampleData,
-            location: location.countryCode.toUpperCase(),
+            location: location.country_code.toUpperCase(),
             total: total,
             options: data.map(getOption), //sampleData.map(getOption)
         };

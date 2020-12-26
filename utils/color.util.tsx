@@ -11,17 +11,17 @@ export const getFlagColors = (colors: IFlagColorType[]) => {
 }
 
 export const getColor = (list: IFlagColorType[], key: number, a = 1, isWhiteOk: boolean = true) => {
-    const sortedList = list;
+    const sortedList = list.slice();
 
     let color = findColor(sortedList, key)
-    let coloredConditional = whiteOrCustom(color, isWhiteOk,list,key,a) || "#999999"
+    let coloredConditional = whiteOrCustom(color, isWhiteOk,list,key,a) || "pink";
     return coloredConditional //alpha(coloredConditional, a)
 }
 
 function findColor(l, index) {
     let counter = index;
     if (counter < 0 || counter == 0) {
-        return l[0].color
+        return l[0].color ? l[0].color : "pink"
     }
     else {
 
@@ -29,7 +29,6 @@ function findColor(l, index) {
             return l[counter].color
         }
         else {
-
             console.log(l)
             for (let i = counter--; i > 0; i++) {
                 if (l[i])

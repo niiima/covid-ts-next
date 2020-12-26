@@ -1,30 +1,34 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import useDarkMode from 'use-dark-mode';
 import styled from 'styled-components';
 
 const DarkModeToggle = styled.span`
- width: 22px;
- height: 30px;
- flex-shrink: 0;
- border:none;
+ width: 22px; 
  & svg {
+     margin-top:10px;
         stroke:silver !important;
         stroke-width:1.4px; 
         width: 30px;
         stroke-linecap:round;
         stroke-linejoin:round;
         transition: 0.5s;
-        fill:${props => props.status === true ? "gold" : "none"}
- }
-`;
+        &:hover{
+            cursor:pointer
+        }
+ }`;
 
 const Toggler = () => {
     const darkMode = useDarkMode(false);
+    const togglerRef = useRef<SVGSVGElement>(null) as any;
+    useEffect(() => {
+        togglerRef.current.style.fill = darkMode.value ? "gold" : "none"
+    }, [darkMode])
+
     return (
         <DarkModeToggle
-            status={darkMode.value}
-            onClick={darkMode.value ? darkMode.disable : darkMode.enable}>
-            <svg viewBox="0 0 24 24" fill="none" >
+            onClick={darkMode.value ? darkMode.disable : darkMode.enable}
+        >
+            <svg ref={togglerRef} viewBox="0 0 24 24" fill="none" >
                 <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
             </svg>
             <input type="checkbox"

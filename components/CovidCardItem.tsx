@@ -60,10 +60,10 @@ const CovidCardItem = (props: ICardItemProps) => {
       <WithDraggable>
         <CovidInfoContent color={cardColors[0]} hoverColor={cardColors[1]} ref={itemRef}>
           {/* <div className="card-front"> */}
-          <EqualDivider style={{ color: cardColors[0] }}>
+          <EqualDivider>
             <EDChild color={cardColors[3] ? cardColors[3] : cardColors[2] ? cardColors[2] : cardColors[1]}
               className="text-left">
-              <BiWorld size="30px" style={{ color: cardColors[0], width: 35 }}></BiWorld>
+              <BiWorld size="30px" style={{ color: cardColors[4] ? cardColors[4] : cardColors[3] ? cardColors[3] : cardColors[2], width: 35 }}></BiWorld>
             </EDChild>
             <EDChild color={cardColors[1]} className='font-weight-bold text-center text-nowrap'>{country}</EDChild>
             <EDChild color={cardColors[0]} className='font-weight-light text-center text-nowrap'>
