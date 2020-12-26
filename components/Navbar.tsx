@@ -5,13 +5,9 @@ const Navbar = () => (
   <nav className="navbar navbar-expand  mb-4">
     <div className="container">
       <a className="navbar-brand" href="#">Country News</a>
+      <DarkModeToggle />
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav ml-auto">
-          <ul className="navbar-nav ml-auto float-left">
-            <li className="nav-item" >
-              <DarkModeToggle />
-            </li>
-          </ul>
           <li className="nav-item">
             <Link href="/" shallow={true}><a className="nav-link">Home</a></Link>
           </li>

@@ -3,7 +3,9 @@ import useDarkMode from 'use-dark-mode';
 import styled from 'styled-components';
 
 const DarkModeToggle = styled.span`
- width: 22px; 
+ width: 30px;
+  margin-left: 5px; 
+  margin-bottom:10px;
  & svg {
      margin-top:10px;
         stroke:silver !important;
