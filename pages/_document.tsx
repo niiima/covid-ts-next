@@ -10,12 +10,13 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head >
-        <link rel="preconnect" href="https://fonts.gstatic.com"/>
-        <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@200&display=swap" rel="stylesheet"/>
-        <meta name="color-scheme" content="dark light"></meta>
+          <meta name="color-scheme" content="dark light"></meta>
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@200&display=swap" rel="stylesheet" />
+          <link rel="shortcut icon" href="/favicon.ico" />
         </Head>
         <body>
-        <script src="noflash.js" />
+          <script src="noflash.js" />
           <Main />
           <NextScript />
         </body>
