@@ -60,30 +60,36 @@ const getAppData = async () => {
     return (async () => {
         const [covidData, location, total] =
             await Promise.all([covidDataPromise(), userLocationPromise(), totalCovidCasesPromise()])
-        const data = list.map((country) => {
+        const data = new Map();
+        list.forEach((country) => {
             if (country) {
                 let covidInfo: ICovidType | undefined = covidData.find(info => {
                     if (info.countryInfo.iso2 === country.iso2)
                         return info
                 });
-                if (covidInfo)
-                    return {
-                        ...country,
-                        covid: covidInfo
+                if (covidInfo) {
+                    if (!data.has(country.iso2)) {
+                        data.set(country.iso2, {
+                            ...country,
+                            covid: covidInfo
+                        })
                     }
-                else return {
-                    ...country,
-                    covid: EmptyCovidObject
+                    else {
+                        data.set(country.iso2, {
+                            ...country,
+                            covid: EmptyCovidObject
+                        })
+                    }
                 }
             }
         });
 
-        const superData = data.slice().sort(compareValues('name', 'asc'))
+        const superData = Array.from(data.values()).sort(compareValues('name', 'asc'));
         return {
-            data: superData.length ? superData : sampleData,// sampleData,
+            data: superData.length ? superData : sampleData,
             location: location.country_code.toUpperCase(),
             total: total,
-            options: data.map(getOption), //sampleData.map(getOption)
+            options: superData.map(getOption), 
         };
     })();
 }
