@@ -1,0 +1,32 @@
+{
+    "dir": "ltr",
+    "lang": "en",
+    "name": "NivNET.ir",
+    "scope": "/",
+    "display": "standalone",
+    "start_url": "https://nivnet.ir/",
+    "short_name": "NivNET",
+    "theme_color": "#000000",
+    "description": "Web Application Development",
+    "orientation": "any",
+    "background_color": "#FFFFFF",
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "/static/favicon@128.png",
+            "sizes": "129*128",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/favicon@400.png",
+            "sizes": "429*428",
+            "type": "image/png"
+        }
+    ]
+}

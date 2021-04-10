@@ -16,15 +16,15 @@ export interface IAppProps {
   totalInfo: ICovidSummary;
 }
 
-const Index: NextPage<IAppProps> = ((props) => {
-  const [selected, setSelected] = useState(props.data?.find((country => country.iso2 == props.clientLocation)));
+const Index: NextPage<IAppProps> = (({ data, options, clientLocation, totalInfo }) => {
+  const [selected, setSelected] = useState(data?.find((country => country.iso2 == clientLocation)));
 
   const handleSelectChange = (country_code: string) => {
     if (selected)
       if (country_code === selected.iso2)
         return false;
 
-    let selectedCovidInfo = props.data?.find(country => country.iso2 === country_code);
+    let selectedCovidInfo = data?.find(country => country.iso2 === country_code);
     if (selectedCovidInfo) {
       setSelected(selectedCovidInfo)
       return true;
@@ -43,14 +43,14 @@ const Index: NextPage<IAppProps> = ((props) => {
     <>
       {status === 'success' || status === 'idle' ?
         <InfoPanel
-          options={props.options ? props.options : sampleOptions}
+          options={options ? options : sampleOptions}
           selected={selected}
           handleSelectChange={(country: string) =>
             handleSelectChange(country)
           }
-          data={props.data ? props.data : sampleData}
+          data={data ? data : sampleData}
           initiated={true}
-          summaryInfo={props.totalInfo}
+          summaryInfo={totalInfo}
         />
         : status === 'pending' ? <IndexSkeleton /> : status === 'error' ? <div>Error: {error}</div> : <div>Offline</div>
       }
