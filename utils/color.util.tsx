@@ -2,7 +2,7 @@ import { IFlagColorType } from '../interfaces/country.interface';
 import alpha from 'color-alpha'
 //import chroma from 'chroma-js';
 
-export const getFlagColors = (colors: IFlagColorType[]) => {
+export const getSanitizedFlagColors = (colors: IFlagColorType[]) => {
     let arr;
     if (colors)
         arr = colors.map(c => c.color);
@@ -14,7 +14,7 @@ export const getColor = (list: IFlagColorType[], key: number, a = 1, isWhiteOk: 
     const sortedList = list.slice();
 
     let color = findColor(sortedList, key)
-    let coloredConditional = whiteOrCustom(color, isWhiteOk,list,key,a) || "pink";
+    let coloredConditional = whiteOrCustom(color, isWhiteOk, list, key, a) || "pink";
     return coloredConditional //alpha(coloredConditional, a)
 }
 
@@ -39,17 +39,17 @@ function findColor(l, index) {
     }
 }
 
-function whiteOrCustom(color, isWhiteOk, list, index,a) {
+function whiteOrCustom(color, isWhiteOk, list, index, a) {
     if (color === "white" || color === "#fff" || color === "#ffffff") {
         if (isWhiteOk) {
             return color
         }
         else {
             if (index === 0)
-                return alpha(color,a)//"#555555"
+                return alpha(color, a)//"#555555"
             else
-            if(list[index+1] && list[index+1]!= undefined)
-                return list[index+1].color || "red"
+                if (list[index + 1] && list[index + 1] != undefined)
+                    return list[index + 1].color || "red"
         }
     }
 }

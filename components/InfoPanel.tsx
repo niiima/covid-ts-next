@@ -25,10 +25,9 @@ const InfoPanel: React.FunctionComponent<IInfoPanelProps> = (props) => {
   // handle onChange event of the Select passed to it's child component
   const handleChange = (e) => {
     setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : [props.selected?.iso2]);
-    if (e)
-      if (e.length !== 0)
-        if (e[e.length - 1].hasOwnProperty("value"))
-          props.handleSelectChange(e[e.length - 1].value);
+    if (e && e["length"] !== 0)
+      if (e[e.length - 1].hasOwnProperty("value"))
+        props.handleSelectChange(e[e.length - 1].value);
   }
 
   const selectedValues = props.options.filter(obj => selectedValue.includes(obj.value));

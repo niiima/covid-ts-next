@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { BiWorld } from 'react-icons/bi'
 import millify from 'millify';
 import gsap from 'gsap';
-import { getFlagColors } from '../utils/color.util';
+import { getSanitizedFlagColors } from '../utils/color.util';
 import { EqualDivider, EDChild } from '../components/FlexDevider';
 import { ISuperCountryType } from '../interfaces/data.interface';
 import WithDraggable from '../components/WithDraggable';
@@ -16,7 +16,7 @@ interface ICardItemProps {
 const CovidCardItem = (props: ICardItemProps) => {
   const { covid, colors } = props.cardInfo;
   const itemRef = useRef(null);
-  const cardColors = getFlagColors(colors);
+  const cardColors = getSanitizedFlagColors(colors);
   // console.log(cardColors)
 
   useEffect(() => {

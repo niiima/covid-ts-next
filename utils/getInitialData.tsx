@@ -89,12 +89,12 @@ const getAppData = async () => {
             data: superData.length ? superData : sampleData,
             location: location.country_code.toUpperCase(),
             total: total,
-            options: superData.map(getOption), 
+            options: superData.map(getIndexedOption),
         };
     })();
 }
 
-function getOption(item, index) {
+function getIndexedOption(item, index) {
     if (item)
         return {
             index: index,

@@ -41,18 +41,21 @@ const Index: NextPage<IAppProps> = (({ data, options, clientLocation, totalInfo 
 
   return (
     <>
-      {status === 'success' || status === 'idle' ?
-        <InfoPanel
-          options={options ? options : sampleOptions}
-          selected={selected}
-          handleSelectChange={(country: string) =>
-            handleSelectChange(country)
-          }
-          data={data ? data : sampleData}
-          initiated={true}
-          summaryInfo={totalInfo}
-        />
-        : status === 'pending' ? <IndexSkeleton /> : status === 'error' ? <div>Error: {error}</div> : <div>Offline</div>
+      {status === 'pending' ? <IndexSkeleton />
+        : status === 'success' || status === 'idle' ?
+          <InfoPanel
+            options={options ? options : sampleOptions}
+            selected={selected}
+            handleSelectChange={(country: string) =>
+              handleSelectChange(country)
+            }
+            data={data ? data : sampleData}
+            initiated={true}
+            summaryInfo={totalInfo}
+          />
+          : status === 'error' ?
+            <div>Error: {error}</div>
+            : <div>Offline</div>
       }
     </>
   )

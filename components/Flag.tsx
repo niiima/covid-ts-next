@@ -1,5 +1,3 @@
-// import {  useRef }from 'react'
-//import { useState } from 'react'
 import styled from 'styled-components'
 import { IOptionType } from '../interfaces/data.interface'
 interface Props {
@@ -7,7 +5,6 @@ interface Props {
 }
 
 const Flag = (props: Props) => {
-
     const flags =
         props.countryCode.map(code => {
             return (
