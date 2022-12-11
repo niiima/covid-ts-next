@@ -25,10 +25,11 @@ const totalCovidCasesPromise: () => Promise<any> = async () => await fetch('http
     else return sampleTotalInfo;
 }).catch(err => console.log(err));
 
-const covidDataPromise: () => Promise<ICovidType[]> = async () => await fetch("https://corona.lmao.ninja/v2/countries?yesterday=&sort=")
+const covidDataPromise: () => Promise<ICovidType[]> = async () => await fetch("https://disease.sh/v3/covid-19/countries?yesterday=&sort=")
     .then(async response => {
         if (response.ok) {
-            const result = await response.json()
+            const result = await response.json();
+            console.log(result)
             if (result.length)
                 return result
             else
