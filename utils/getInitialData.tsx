@@ -29,7 +29,7 @@ const covidDataPromise: () => Promise<ICovidType[]> = async () => await fetch("h
     .then(async response => {
         if (response.ok) {
             const result = await response.json();
-            console.log(result)
+            // console.log(result)
             if (result.length)
                 return result
             else
